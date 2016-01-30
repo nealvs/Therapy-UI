@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('therapyui.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -38,14 +38,22 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DemoCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+
+  $scope.machine = {};
+  $scope.machine.joystick = { value: 0 };
+
+  $scope.stop = function() {
+      console.log("stop session")
+  };
+
+  $scope.reset = function() {
+      console.log("reset")
+  };
+
+  $scope.updateJoystick = function() {
+      //console.log("Joystick: " + $scope.machine.joystick.value);
+  };
+
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {

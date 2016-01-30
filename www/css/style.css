@@ -1,1 +1,12 @@
 /* Empty. Add your own CSS if you like */
+
+body {
+   height: 800px;
+   width: 400px;
+}
+
+.view-container {
+    width: 600px;
+    height: 800px;
+    border: 1px solid black;
+}
