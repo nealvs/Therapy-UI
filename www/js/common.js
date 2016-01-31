@@ -1,8 +1,8 @@
 angular.module('therapyui.common', [])
 
-.factory('Common', function() {
+.factory('Common', function($http) {
     var service = {};
-    service.baseUrl = 'http://localhost:8080'
+    service.baseUrl = 'http://localhost:8686'
 
     service.get = function(path) {
         $q = $http({
@@ -16,7 +16,7 @@ angular.module('therapyui.common', [])
         $q = $http({
             method: 'POST',
             url: service.baseUrl + path,
-            data: params
+            data: JSON.stringify(params)
         });
         return $q;
     };

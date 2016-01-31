@@ -37,24 +37,35 @@ angular.module('therapyui.controllers', [])
   };
 })
 
-.controller('DemoCtrl', function($scope) {
+.controller('DemoCtrl', function($scope, $interval, Machine) {
 
   $scope.machine = {};
-  $scope.machine.joystick = { value: 0 };
+  $scope.machine.joystick = 0 ;
+
+  $scope.$on('$ionicView.enter', function(e) {
+      var timer = $interval(function() {
+          Machine.getStatus().then(function(response) {
+              $scope.machine = response.data;
+          });
+      }, 500);
+  });
 
   $scope.stop = function() {
       console.log("stop session")
   };
 
   $scope.reset = function() {
-      console.log("reset")
+      Machine.reset().then(function(response) {
+          $scope.machine = response.data;
+      });
   };
 
   $scope.updateJoystick = function() {
-      //console.log("Joystick: " + $scope.machine.joystick.value);
+      Machine.updateJoystick($scope.machine.joystick).then(function(response) {
+          $scope.machine = response.data;
+      });
   };
 
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+

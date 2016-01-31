@@ -9,13 +9,13 @@
       <div class="card">
         <div class="item item-text-wrap">
             Angle:
-            25
+            {{ machine.angle }}
         </div>
         <div class="item item-text-wrap">
-          Hold Time: -
+          Hold Time: {{ machine.holdTime }}
         </div>
         <div class="item item-text-wrap">
-          Session Time: 08:34
+          Session Time: {{ machine.sessionTime }}
         </div>
       </div>
 
@@ -24,32 +24,35 @@
       </div>
       <div class="card">
         <div class="item item-text-wrap">
-          Active Motor:
+          Active Motor: {{ machine.activeMotor }}
         </div>
         <div class="item item-text-wrap">
-          Motor Speed:
+          Lift Motor: {{ machine.liftMotor }}
         </div>
         <div class="item item-text-wrap">
-          Seat height: 100%
+          Rotation Motor: {{ machine.rotationMotor }}
+        </div>
+        <div class="item item-text-wrap">
+          Seat height: {{ machine.seat }}%
         </div>
       </div>
 
       <div class="item item-divider">
-        Joystick: {{ machine.joystick.value }}
+        Joystick: {{ machine.joystick }}
       </div>
       <div class="item">
         <div class="item range">
           <i class="icon ion-ios-rewind"></i>
-          <input type="range" ng-model="machine.joystick.value" min="-127" max="127" value="0" ng-change="updateJoystick()">
+          <input type="range" ng-model="machine.joystick" min="-127" max="127" value="0" ng-change="updateJoystick()">
           <i class="icon ion-ios-fastforward"></i>
         </div>
       </div>
 
       <div class="item">
-        <button class="button icon-left button-calm" ng-click="stop()">
-          <i class="icon ion-stop"></i>
-          Stop Session
-        </button>
+        <!--<button class="button icon-left button-calm" ng-click="stop()">-->
+          <!--<i class="icon ion-stop"></i>-->
+          <!--Stop Session-->
+        <!--</button>-->
         <button class="button icon-left button-calm" style="float: right;" ng-click="reset()">
           <i class="icon ion-ios-reload"></i>
           Reset
