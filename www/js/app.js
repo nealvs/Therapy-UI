@@ -23,12 +23,21 @@ angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machin
           }
         }
     })
-    .state('app.single', {
-      url: '/playlists/:playlistId',
+    .state('app.users', {
+        url: '/users',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/users.html',
+            controller: 'UsersCtrl'
+          }
+        }
+    })
+    .state('app.user', {
+      url: '/user/:userId',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlist.html',
-          controller: 'PlaylistCtrl'
+          templateUrl: 'templates/user.html',
+          controller: 'UserCtrl'
         }
       }
     });

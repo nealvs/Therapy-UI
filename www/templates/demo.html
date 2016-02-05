@@ -8,8 +8,7 @@
       </div>
       <div class="card">
         <div class="item item-text-wrap">
-            Angle:
-            {{ machine.angle }}
+            Angle: {{ machine.angle }}
         </div>
         <div class="item item-text-wrap">
           Hold Time: {{ machine.holdTime }}
@@ -43,7 +42,7 @@
       <div class="item">
         <div class="item range">
           <i class="icon ion-ios-rewind"></i>
-          <input type="range" ng-model="machine.joystick" min="-127" max="127" value="0" ng-change="updateJoystick()">
+          <input type="range" ng-model="machine.joystick" min="-1024" max="1024" value="0" ng-change="updateJoystick()">
           <i class="icon ion-ios-fastforward"></i>
         </div>
       </div>
