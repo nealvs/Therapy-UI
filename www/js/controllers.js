@@ -1,4 +1,4 @@
-angular.module('therapyui.controllers', [])
+angular.module('therapyui.controllers', ['ionic'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -8,18 +8,49 @@ angular.module('therapyui.controllers', [])
 
 })
 
-.controller('UsersCtrl', function($scope) {
+.controller('PatientsCtrl', function($scope, Machine) {
     $scope.$on('$ionicView.enter', function(e) {
-        console.log("Users...");
+        console.log("Patients...");
     });
+    $scope.patients = [];
 
+    $scope.loadPatients = function() {
+        Machine.loadPatients().then(function(response) {
+            $scope.patients.list = response.data.patients;
+            console.log("Patients: " + $scope.patients.size);
+        });
+    };
+
+    $scope.loadPatients();
 })
 
-.controller('UserCtrl', function($scope) {
+.controller('PatientCtrl', function($scope, $stateParams, Machine) {
     $scope.$on('$ionicView.enter', function(e) {
-        console.log("User...");
+        console.log("Patient..." + JSON.stringify($stateParams));
     });
+    $scope.patient = {};
+    $scope.loadPatient = function() {
+        Machine.loadPatient($stateParams.patientId).then(function(response) {
+            console.log(JSON.stringify(response.data));
+            $scope.patient = response.data.patient;
+        });
+    };
 
+    $scope.loadPatient();
+})
+
+.controller('SessionCtrl', function($scope, $stateParams, Machine) {
+    $scope.$on('$ionicView.enter', function(e) {
+        console.log("Session..." + JSON.stringify($stateParams));
+    });
+    $scope.session = {};
+    $scope.loadSession = function() {
+        Machine.loadSession($stateParams.sessionId).then(function(response) {
+            console.log(JSON.stringify(response.data));
+            $scope.session = response.data.session;
+        });
+    };
+    $scope.loadSession();
 })
 
 .controller('DemoCtrl', function($scope, $interval, Machine) {

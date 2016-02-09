@@ -1,0 +1,20 @@
+<ion-view view-title="Select Patient">
+  <ion-header-bar class="bar-subheader" style="height: 60px; border-bottom: 0px; top: 37px;">
+    <button class="button button-large button-block button-positive">New Patient</button>
+  </ion-header-bar>
+  <ion-content padding="true">
+    <center ng-if="!patients.list || patients.list.length == 0" style="margin-top: 40px;">
+      No Patients Found
+    </center>
+    <ion-list>
+      <ion-item ng-repeat="patient in patients.list track by $index" class="item-remove-animate item-icon-right" href="#/app/patient/{{patient.id}}">
+        <p>{{ patient.lastName }}, {{ patient.firstName }}</p>
+
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="ion-trash-b icon-right button-assertive" ng-click="delete(patient)">
+          &nbsp; Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -5,6 +5,7 @@ angular.module('therapyui.common', [])
     service.baseUrl = 'http://localhost:8686'
 
     service.get = function(path) {
+        console.log("GET " + path);
         $q = $http({
             method: 'GET',
             url: service.baseUrl + path
@@ -13,6 +14,7 @@ angular.module('therapyui.common', [])
     };
 
     service.post = function(path, params) {
+        console.log("POST " + path);
         $q = $http({
             method: 'POST',
             url: service.baseUrl + path,

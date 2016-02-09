@@ -7,6 +7,16 @@ angular.module('therapyui.machine-service', [])
         return Common.get('/status');
     };
 
+    service.loadPatients = function() {
+        return Common.get('/patientList');
+    };
+    service.loadPatient = function(id) {
+        return Common.get('/patient/' + id);
+    };
+    service.loadSession = function(id) {
+        return Common.get('/session/' + id);
+    };
+
     service.updateJoystick = function(value) {
         return Common.post('/updateJoystick', {'value': value});
     };

@@ -23,27 +23,37 @@ angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machin
           }
         }
     })
-    .state('app.users', {
-        url: '/users',
+    .state('app.patients', {
+        url: '/patients',
         views: {
           'menuContent': {
-            templateUrl: 'templates/users.html',
-            controller: 'UsersCtrl'
+            templateUrl: 'templates/patients.html',
+            controller: 'PatientsCtrl'
           }
         }
     })
-    .state('app.user', {
-      url: '/user/:userId',
+    .state('app.patient', {
+      url: '/patient/:patientId',
       views: {
         'menuContent': {
-          templateUrl: 'templates/user.html',
-          controller: 'UserCtrl'
+          templateUrl: 'templates/patient.html',
+          controller: 'PatientCtrl'
         }
       }
-    });
+    })
+    .state('app.session', {
+        url: '/session/:sessionId',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/session.html',
+            controller: 'SessionCtrl'
+          }
+        }
+      })
+    ;
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/demo');
+    $urlRouterProvider.otherwise('/app/patients');
 
 
     // Disable AJAX Caching
