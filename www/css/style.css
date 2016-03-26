@@ -1,12 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
 body {
-   height: 800px;
-   width: 400px;
+   height: 1024px;
+   width: 600px;
 }
 
 .view-container {
     width: 600px;
-    height: 800px;
+    height: 1024px;
     border: 1px solid black;
 }
