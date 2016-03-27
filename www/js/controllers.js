@@ -65,6 +65,9 @@ angular.module('therapyui.controllers', ['ionic'])
       var timer = $interval(function() {
           if($scope.running) {
             Machine.getStatus().then(function(response) {
+                if($scope.machine) {
+                  response.data.joystickSlider = $scope.machine.joystickSlider;
+                }
                 $scope.machine = response.data;
             });
           }
@@ -87,7 +90,10 @@ angular.module('therapyui.controllers', ['ionic'])
   };
 
   $scope.updateJoystick = function() {
-      Machine.updateJoystick($scope.machine.joystick).then(function(response) {
+      Machine.updateJoystick($scope.machine.joystickSlider / 100).then(function(response) {
+          if($scope.machine) {
+             response.data.joystickSlider = $scope.machine.joystickSlider;
+          }
           $scope.machine = response.data;
       });
   };

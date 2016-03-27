@@ -8,13 +8,13 @@
       </div>
       <div class="card">
         <div class="item item-text-wrap">
-            Angle: {{ machine.angle }}
+            Angle: {{ machine.angle | number : 0 }}
         </div>
         <div class="item item-text-wrap">
-          Hold Time: {{ machine.holdTime }}
+            Hold Time: {{ machine.holdTime | number : 0 }}
         </div>
         <div class="item item-text-wrap">
-          Session Time: {{ machine.sessionTime }}
+            Session Time: {{ machine.sessionTime | number : 0 }}
         </div>
       </div>
 
@@ -23,26 +23,20 @@
       </div>
       <div class="card">
         <div class="item item-text-wrap">
-          Active Motor: {{ machine.activeMotor }}
-        </div>
-        <div class="item item-text-wrap">
-          Lift Motor: {{ machine.liftMotor }}
+          Motor Switch: {{ machine.motorSwitch }}
         </div>
         <div class="item item-text-wrap">
           Rotation Motor: {{ machine.rotationMotor }}
         </div>
-        <div class="item item-text-wrap">
-          Seat height: {{ machine.seat }}%
-        </div>
       </div>
 
       <div class="item item-divider">
-        Joystick: {{ machine.joystick }}
+        Joystick: {{ machine.joystick | number : 2 }} V
       </div>
       <div class="item">
         <div class="item range">
           <i class="icon ion-ios-rewind"></i>
-          <input type="range" ng-model="machine.joystick" min="-1024" max="1024" value="0" ng-change="updateJoystick()">
+          <input type="range" ng-model="machine.joystickSlider" min="0" max="500" value="250" ng-change="updateJoystick()">
           <i class="icon ion-ios-fastforward"></i>
         </div>
       </div>
