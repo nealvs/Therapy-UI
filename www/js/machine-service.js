@@ -13,6 +13,14 @@ angular.module('therapyui.machine-service', [])
     service.loadPatient = function(id) {
         return Common.get('/patient/' + id);
     };
+
+    service.createPatient = function(patient) {
+        return Common.post('/createPatient', patient);
+    };
+    service.deletePatient = function(patientId) {
+        return Common.post('/deletePatient', {'id': patientId});
+    };
+
     service.loadSession = function(id) {
         return Common.get('/session/' + id);
     };

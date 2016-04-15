@@ -15,6 +15,7 @@ angular.module('therapyui.common', [])
 
     service.post = function(path, params) {
         console.log("POST " + path);
+        console.log(params);
         $q = $http({
             method: 'POST',
             url: service.baseUrl + path,

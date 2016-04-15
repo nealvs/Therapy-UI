@@ -8,16 +8,63 @@ angular.module('therapyui.controllers', ['ionic'])
 
 })
 
-.controller('PatientsCtrl', function($scope, Machine) {
+.controller('PatientsCtrl', function($scope, Machine, $location, $ionicPopup) {
     $scope.$on('$ionicView.enter', function(e) {
-        console.log("Patients...");
+
     });
+
     $scope.patients = [];
+    $scope.newPatient = {firstName: "", lastName: ""};
 
     $scope.loadPatients = function() {
         Machine.loadPatients().then(function(response) {
             $scope.patients.list = response.data.patients;
-            console.log("Patients: " + $scope.patients.size);
+            console.log("Patients: " + $scope.patients.list.length);
+        });
+    };
+
+    $scope.addPatient = function() {
+        $scope.showNewPatientForm = true;
+    };
+
+    $scope.cancel = function() {
+        $scope.newPatient.firstName = "";
+        $scope.newPatient.lastName = "";
+        $scope.showNewPatientForm = false;
+    };
+
+    $scope.createPatient = function() {
+        if($scope.newPatient.firstName && $scope.newPatient.lastName) {
+            Machine.createPatient($scope.newPatient)
+            .success(function(response) {
+                console.log(JSON.stringify(response));
+                $scope.showNewPatientForm = false;
+                $scope.loadPatients();
+                $location.path("/app/patient/" + response.id);
+            }).error(function(response) {
+                $ionicPopup.alert({
+                   title: 'Error',
+                   template: 'Error adding patient'
+                });
+            });
+        } else {
+            $ionicPopup.alert({
+               title: 'Missing Data',
+               template: 'Please provide a First Name and Last Name'
+            });
+        }
+    };
+
+     $scope.deletePatient = function(patient) {
+        Machine.deletePatient(patient.id)
+        .success(function(response) {
+            console.log(JSON.stringify(response.data));
+            $scope.loadPatients();
+        }).error(function(response) {
+            $ionicPopup.alert({
+               title: 'Error',
+               template: 'Error deleting patient'
+            });
         });
     };
 
