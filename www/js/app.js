@@ -14,12 +14,12 @@ angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machin
       templateUrl: 'templates/menu.html',
       controller: 'AppCtrl'
     })
-    .state('app.demo', {
-        url: '/demo',
+    .state('app.current', {
+        url: '/current',
         views: {
           'menuContent': {
-            templateUrl: 'templates/demo.html',
-            controller: 'DemoCtrl'
+            templateUrl: 'templates/current.html',
+            controller: 'CurrentSessionCtrl'
           }
         }
     })

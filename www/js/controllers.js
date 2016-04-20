@@ -8,11 +8,12 @@ angular.module('therapyui.controllers', ['ionic'])
 
 })
 
-.controller('PatientsCtrl', function($scope, Machine, $location, $ionicPopup) {
+.controller('PatientsCtrl', function($scope, Machine, $location, $ionicPopup, $ionicListDelegate) {
     $scope.$on('$ionicView.enter', function(e) {
 
     });
 
+    $scope.form = {search: ""};
     $scope.patients = [];
     $scope.newPatient = {firstName: "", lastName: ""};
 
@@ -20,10 +21,40 @@ angular.module('therapyui.controllers', ['ionic'])
         Machine.loadPatients().then(function(response) {
             $scope.patients.list = response.data.patients;
             console.log("Patients: " + $scope.patients.list.length);
+            $scope.$digest();
         });
     };
 
+    $scope.clearSearch = function() {
+        console.log('Clear Search');
+        $scope.form.search = "";
+        $ionicListDelegate.closeOptionButtons();
+    };
+
+    $scope.patientSelected = function() {
+        $ionicListDelegate.closeOptionButtons();
+    };
+
+    $scope.showPatient = function(patient) {
+        if($scope.form.search && patient) {
+            var modifiedSearchString = $scope.form.search.replace(/\W/g, ' ');
+            var parts = modifiedSearchString.split(" ");
+            var containsAllParts = true;
+            for(p=0; p<parts.length; p++) {
+                part = parts[p].toLowerCase().trim();
+                if(part && patient.firstName.toLowerCase().indexOf(part) < 0 && patient.lastName.toLowerCase().indexOf(part) < 0) {
+                    containsAllParts = false;
+                    break;
+                }
+            }
+            return containsAllParts;
+        }
+        return true;
+    };
+
     $scope.addPatient = function() {
+        $scope.newPatient.firstName = "";
+        $scope.newPatient.lastName = "";
         $scope.showNewPatientForm = true;
     };
 
@@ -56,16 +87,30 @@ angular.module('therapyui.controllers', ['ionic'])
     };
 
      $scope.deletePatient = function(patient) {
-        Machine.deletePatient(patient.id)
-        .success(function(response) {
-            console.log(JSON.stringify(response.data));
-            $scope.loadPatients();
-        }).error(function(response) {
-            $ionicPopup.alert({
-               title: 'Error',
-               template: 'Error deleting patient'
-            });
-        });
+
+          var confirmPopup = $ionicPopup.confirm({
+              title: 'Delete Patient',
+              template: 'Are you sure you want to delete this patient?'
+          });
+
+          confirmPopup.then(function(res) {
+              if(res) {
+                  Machine.deletePatient(patient.id)
+                     .success(function(response) {
+                          console.log(JSON.stringify(response.data));
+                          $scope.loadPatients();
+                          $ionicListDelegate.closeOptionButtons();
+                     }).error(function(response) {
+                         $ionicPopup.alert({
+                            title: 'Error',
+                            template: 'Error deleting patient'
+                         });
+                     });
+              } else {
+                  // No
+                  $ionicListDelegate.closeOptionButtons();
+              }
+          });
     };
 
     $scope.loadPatients();
@@ -100,7 +145,7 @@ angular.module('therapyui.controllers', ['ionic'])
     $scope.loadSession();
 })
 
-.controller('DemoCtrl', function($scope, $interval, Machine) {
+.controller('CurrentSessionCtrl', function($scope, $interval, Machine) {
 
   $scope.machine = {};
   $scope.machine.joystick = 0;

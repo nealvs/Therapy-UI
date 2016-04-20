@@ -34,8 +34,15 @@
       <center ng-if="!patients.list || patients.list.length == 0" style="margin-top: 40px;">
         No Patients Found
       </center>
+      <ion-list ng-if="patients.list && patients.list.length > 0" style="margin-bottom: 10px;">
+        <label class="item item-input">
+          <input type="text" placeholder="Search" ng-model="form.search" />
+        </label>
+        <button ng-if="form.search.length" class="input-button button button-icon ion-android-close" ng-click="clearSearch()"></button>
+      </ion-list>
+      <br/>
       <ion-list>
-        <ion-item ng-repeat="patient in patients.list track by $index" class="item-remove-animate item-icon-right" href="#/app/patient/{{patient.id}}">
+        <ion-item ng-repeat="patient in patients.list track by $index" ng-if="showPatient(patient)" ng-click="patientSelected()" class="item-remove-animate item-icon-right" href="#/app/patient/{{patient.id}}">
           <p>{{ patient.lastName }}, {{ patient.firstName }}</p>
 
           <i class="icon ion-chevron-right icon-accessory"></i>

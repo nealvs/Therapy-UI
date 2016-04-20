@@ -4,3 +4,12 @@
     width: 480px;
     border: 1px solid black;
 }
+
+.button.button-icon.input-button {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  color: #bbb;
+  z-index: 1000;
+  width: 50px;
+}

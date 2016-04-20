@@ -3,14 +3,17 @@
 
     <div class="list">
       <div class="item item-divider">
-        Information
+          Information
       </div>
       <div class="item">
-        First Name: {{ patient.firstName }} <br/>
-        Last  Name: {{ patient.lastName }} <br/>
+          First Name: {{ patient.firstName }} <br/>
+          Last Name: {{ patient.lastName }} <br/>
+      </div>
+      <div class="item">
+          <button class="button button-balanced" ng-click="startNewSession();">Start New Session</button>
       </div>
       <div class="item item-divider">
-        Sessions
+          Sessions
       </div>
       <ion-list class="item">
         <ion-item ng-repeat="session in patient.sessions track by $index" class="item-remove-animate item-icon-right" href="#/app/session/{{session.id}}">
