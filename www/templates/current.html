@@ -4,20 +4,60 @@
     <div class="list">
 
       <div class="item item-divider">
-        Session Info
+        Session Info: {{ machine.session.patient.firstName }} {{ machine.session.patient.lastName }}
       </div>
-      <div class="card">
-        <div class="item item-text-wrap">
-            Angle: {{ machine.angle | number : 0 }}
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="item item-text-wrap center">
+                <h1>{{ machine.angle | number : 0 }}</h1>
+                <span>Angle</span>
+            </div>
+          </div>
         </div>
-        <div class="item item-text-wrap">
-            Hold Time: {{ machine.holdTime | number : 0 }}
+        <div class="col">
+          <div class="card">
+            <div class="item item-text-wrap center">
+              <h1>{{ machine.session.holdTime | number : 0 }}</h1>
+              <span>Hold Time</span>
+            </div>
+          </div>
         </div>
-        <div class="item item-text-wrap">
-            Session Time: {{ machine.sessionTime | number : 0 }}
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="item item-text-wrap center">
+              <h1>{{ machine.session.lowAngle | number : 0 }}</h1>
+              <span>Low Angle</span>
+            </div>
+          </div>
         </div>
-        <div class="item item-text-wrap">
-            Repetitions: {{ machine.repetitions | number : 0 }}
+        <div class="col">
+          <div class="card">
+            <div class="item item-text-wrap center">
+              <h1>{{ machine.session.highAngle | number : 0 }}</h1>
+              <span>High Angle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="item item-text-wrap center">
+              <h1>{{ machine.session.repetitions | number : 0 }}</h1>
+              <span>Repetitions</span>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="item item-text-wrap center">
+              <h1>{{ machine.session.sessionTime | number : 0 }}</h1>
+              <span>Session Time</span>
+            </div>
+          </div>
         </div>
       </div>
 

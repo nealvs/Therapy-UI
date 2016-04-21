@@ -21,7 +21,9 @@ angular.module('therapyui.controllers', ['ionic'])
         Machine.loadPatients().then(function(response) {
             $scope.patients.list = response.data.patients;
             console.log("Patients: " + $scope.patients.list.length);
-            $scope.$digest();
+            try {
+              $scope.$digest();
+            } catch(ex) {}
         });
     };
 
@@ -97,7 +99,7 @@ angular.module('therapyui.controllers', ['ionic'])
               if(res) {
                   Machine.deletePatient(patient.id)
                      .success(function(response) {
-                          console.log(JSON.stringify(response.data));
+                          console.log(JSON.stringify(response));
                           $scope.loadPatients();
                           $ionicListDelegate.closeOptionButtons();
                      }).error(function(response) {
@@ -116,7 +118,7 @@ angular.module('therapyui.controllers', ['ionic'])
     $scope.loadPatients();
 })
 
-.controller('PatientCtrl', function($scope, $stateParams, Machine) {
+.controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
     $scope.$on('$ionicView.enter', function(e) {
         console.log("Patient..." + JSON.stringify($stateParams));
     });
@@ -127,7 +129,19 @@ angular.module('therapyui.controllers', ['ionic'])
             $scope.patient = response.data.patient;
         });
     };
-
+    $scope.startNewSession = function() {
+        console.log("startNewSession: " + $stateParams.patientId);
+        Machine.startSession($stateParams.patientId)
+          .success(function(response) {
+                console.log("startSession: " + JSON.stringify(response));
+                $state.go("app.current");
+          }).error(function(response) {
+               $ionicPopup.alert({
+                  title: 'Error',
+                  template: 'Error starting new session'
+               });
+          });
+    };
     $scope.loadPatient();
 })
 
