@@ -1,4 +1,4 @@
-<ion-view view-title="Therapy Pi Demo">
+<ion-view view-title="">
 
   <ion-content>
     <div class="list">
@@ -10,7 +10,7 @@
         <div class="col">
           <div class="card">
             <div class="item item-text-wrap center">
-                <h1>{{ machine.angle | number : 0 }}</h1>
+                <h1>{{ machine.angle | number : 0 }}&deg;</h1>
                 <span>Angle</span>
             </div>
           </div>
@@ -28,7 +28,7 @@
         <div class="col">
           <div class="card">
             <div class="item item-text-wrap center">
-              <h1>{{ machine.session.lowAngle | number : 0 }}</h1>
+              <h1>{{ machine.session.lowAngle | number : 0 }}&deg;</h1>
               <span>Low Angle</span>
             </div>
           </div>
@@ -36,7 +36,7 @@
         <div class="col">
           <div class="card">
             <div class="item item-text-wrap center">
-              <h1>{{ machine.session.highAngle | number : 0 }}</h1>
+              <h1>{{ machine.session.highAngle | number : 0 }}&deg;</h1>
               <span>High Angle</span>
             </div>
           </div>
@@ -54,11 +54,15 @@
         <div class="col">
           <div class="card">
             <div class="item item-text-wrap center">
-              <h1>{{ machine.session.sessionTime | number : 0 }}</h1>
+              <h1>{{ machine.session.sessionTime | number : 0 | secondsToDateTime | date:'mm:ss'}}</h1>
               <span>Session Time</span>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="item">
+        <button class="button button-balanced" ng-click="stopSession();">Stop Session</button>
       </div>
 
       <div class="item item-divider">

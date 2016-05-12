@@ -64,4 +64,11 @@ angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machin
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
-});
+})
+.filter('secondsToDateTime', [function() {
+    return function(seconds) {
+        return new Date(1970, 0, 1).setSeconds(seconds);
+    };
+}])
+
+;

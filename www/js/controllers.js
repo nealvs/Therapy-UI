@@ -159,11 +159,10 @@ angular.module('therapyui.controllers', ['ionic'])
     $scope.loadSession();
 })
 
-.controller('CurrentSessionCtrl', function($scope, $interval, Machine) {
+.controller('CurrentSessionCtrl', function($scope, $state, $interval, Machine) {
 
   $scope.machine = {};
   $scope.machine.joystick = 0;
-
 
   $scope.$on('$ionicView.enter', function(e) {
       console.log("Demo start...");
@@ -185,8 +184,18 @@ angular.module('therapyui.controllers', ['ionic'])
       $scope.running = false;
   });
 
-  $scope.stop = function() {
-      console.log("stop session")
+  $scope.stopSession = function() {
+      console.log("stop session");
+      Machine.stopSession()
+      .success(function(response) {
+            console.log("stopSession: " + JSON.stringify(response));
+            $state.go("app.patient", {'patientId' : $scope.machine.session.patient.id });
+      }).error(function(response) {
+           $ionicPopup.alert({
+              title: 'Error',
+              template: 'Error stopping session'
+           });
+      });
   };
 
   $scope.reset = function() {
