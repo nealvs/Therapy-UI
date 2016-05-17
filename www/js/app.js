@@ -23,6 +23,15 @@ angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machin
           }
         }
     })
+    .state('app.settings', {
+          url: '/settings',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/settings.html',
+              controller: 'SettingsCtrl'
+            }
+          }
+      })
     .state('app.patients', {
         url: '/patients',
         views: {

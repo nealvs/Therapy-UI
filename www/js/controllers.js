@@ -159,6 +159,39 @@ angular.module('therapyui.controllers', ['ionic'])
     $scope.loadSession();
 })
 
+.controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
+    $scope.$on('$ionicView.enter', function(e) {
+        console.log("Settings..." + JSON.stringify($stateParams));
+    });
+    $scope.machine = {};
+    $scope.running = true;
+      var timer = $interval(function() {
+          if($scope.running) {
+            Machine.getStatus().then(function(response) {
+                $scope.machine = response.data;
+            });
+          }
+      }, 500);
+
+      $scope.calibrate = function() {
+          console.log("calibrate");
+          Machine.calibrate()
+            .success(function(response) {
+                 $scope.machine = response.data;
+            }).error(function(response) {
+                 $ionicPopup.alert({
+                    title: 'Error',
+                    template: 'Error calibrating angle voltage'
+                 });
+            });
+      };
+
+      $scope.$on('$ionicView.leave', function(e) {
+          console.log("Leaving settings...");
+          $scope.running = false;
+      });
+})
+
 .controller('CurrentSessionCtrl', function($scope, $state, $interval, Machine) {
 
   $scope.machine = {};
@@ -180,7 +213,7 @@ angular.module('therapyui.controllers', ['ionic'])
   });
 
   $scope.$on('$ionicView.leave', function(e) {
-      console.log("Leaving demo...");
+      console.log("Leaving current...");
       $scope.running = false;
   });
 

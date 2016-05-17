@@ -31,6 +31,10 @@ angular.module('therapyui.machine-service', [])
         return Common.get('/session/' + id);
     };
 
+    service.calibrate = function(id) {
+        return Common.post('/settings/calibrate');
+    };
+
     service.updateJoystick = function(value) {
         return Common.post('/updateJoystick', {'value': value});
     };

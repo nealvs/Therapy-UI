@@ -17,3 +17,7 @@
 .center {
   text-align: center;
 }
+
+.item h2 {
+  font-size: 19px;
+}
