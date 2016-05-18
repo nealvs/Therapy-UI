@@ -1,4 +1,4 @@
-angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machine-service', 'therapyui.common'])
+angular.module('therapyui', ['ionic', 'ng-virtual-keyboard', 'therapyui.controllers', 'therapyui.machine-service', 'therapyui.common'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -78,6 +78,4 @@ angular.module('therapyui', ['ionic', 'therapyui.controllers', 'therapyui.machin
     return function(seconds) {
         return new Date(1970, 0, 1).setSeconds(seconds);
     };
-}])
-
-;
+}]);

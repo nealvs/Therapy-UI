@@ -3,6 +3,7 @@ angular.module('therapyui.controllers', ['ionic'])
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   $scope.$on('$ionicView.enter', function(e) {
+      console.log("App Started");
 
   });
 
@@ -10,9 +11,7 @@ angular.module('therapyui.controllers', ['ionic'])
 
 .controller('PatientsCtrl', function($scope, Machine, $location, $ionicPopup, $ionicListDelegate) {
     $scope.$on('$ionicView.enter', function(e) {
-
     });
-
     $scope.form = {search: ""};
     $scope.patients = [];
     $scope.newPatient = {firstName: "", lastName: ""};
