@@ -128,8 +128,8 @@ button.ui-keyboard-extender span {
 
 /* Media Queries (optimized for jQuery UI themes; may be slightly off in jQuery Mobile themes) */
 /* 240 x 320 (small phone)  */
-@media all and (max-width: 319px) {
-	.ui-keyboard div { font-size: 9px; }
+@media all and (max-width: 450px) {
+	.ui-keyboard div { font-size: 16px; }
 	.ui-keyboard .ui-keyboard-input { font-size: 12px; }
 	/* I don't own an iPhone so I have no idea how small this really is... is it even clickable with your finger? */
 	.ui-body .ui-btn { margin: 0; font-size: 9px; }
@@ -140,8 +140,8 @@ button.ui-keyboard-extender span {
 }
 
 /* 320 x 480 (iPhone)  */
-@media all and (min-width: 320px) and (max-width: 479px) {
-	.ui-keyboard div { font-size: 9px; }
+@media all and (min-width: 450px) and (max-width: 479px) {
+	.ui-keyboard div { font-size: 16px; }
 	.ui-keyboard .ui-keyboard-input { font-size: 14px; }
 	/* I don't own an iPhone so I have no idea how small this really is... is it even clickable with your finger? */
 	.ui-body .ui-btn { margin: 0; font-size: 11px; }
