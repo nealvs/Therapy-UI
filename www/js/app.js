@@ -75,6 +75,8 @@ angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.cont
 })
 .filter('secondsToDateTime', [function() {
     return function(seconds) {
-        return new Date(1970, 0, 1).setSeconds(seconds);
+        var d = new Date(0,0,0,0,0,0,0);
+        d.setSeconds(seconds);
+        return d;
     };
 }]);

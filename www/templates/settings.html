@@ -8,26 +8,26 @@
         <table class="calibration">
           <tr>
             <td>
-              <span class="large-text">Calibrated Voltage:</span>
+              <span class="large-text white">Calibrated Voltage:</span>
             </td>
             <td>
-              <span class="large-text">{{ machine.angleCalibrationVoltage | number : 2 }}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="large-text">Encoder Voltage:</span>
-            </td>
-            <td>
-              <span class="large-text">{{ machine.rawAngle | number : 2 }}</span>
+              <span class="large-text white">{{ machine.angleCalibrationVoltage | number : 2 }}</span>
             </td>
           </tr>
           <tr>
             <td>
-              <span class="large-text">Angle Reading:</span>
+              <span class="large-text white">Encoder Voltage:</span>
             </td>
             <td>
-              <span class="large-text">{{ machine.angle | number : 0 }}&deg;</span>
+              <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="large-text white">Angle Reading:</span>
+            </td>
+            <td>
+              <span class="large-text white">{{ machine.angle | number : 0 }}&deg;</span>
             </td>
           </tr>
           <tr>
@@ -39,13 +39,22 @@
             <td colspan="2">
               <button class="btn btn-block btn-lg btn-primary" ng-click="calibrate();">
                 <span class="glyphicon glyphicon-wrench"></span>
-                Calibrate to 90&deg Now
+                Calibrate at 90&deg
               </button>
             </td>
           </tr>
         </table>
       </div>
       <br/>
+      <div class="list-group-item">
+        <form class="form-inline">
+          <label for="holdTime">
+            <h3>Hold Time (seconds):</h3>
+          </label>
+          <input id="holdTime" type="text" class="input-lg form-control" style="display: inline-block; width: 70px;" maxlength="2" ng-model="settings.holdTime" ng-virtual-keyboard />
+          <button class="btn btn-lg btn-primary" ng-click="clearDatabase();">Set</button>
+        </form>
+      </div>
       <div class="list-group-item">
         <button class="btn btn-block btn-lg btn-primary" ng-click="changePassword();">
           <span class="glyphicon glyphicon-lock"></span>

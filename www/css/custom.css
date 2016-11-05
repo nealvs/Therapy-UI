@@ -1,6 +1,16 @@
 
-.calibration span {
-    
+
+.session-number {
+    font-size: 130px; 
+    color: white; 
+    text-align: center;
+    clear: both;
+    margin: 0px;
+}
+
+.session-title {
+    margin-top: 2px;
+    float: left;
 }
 
 table.calibration {
@@ -8,5 +18,29 @@ table.calibration {
 }
 
 .large-text {
-    font-size: 35px;
+    font-size: 25px;
+}
+
+.white {
+    color: white;
+}
+
+.red {
+    color: red;
+}
+.green {
+    color: #09FE01;
+}
+.gray {
+    color: #c8c8c8;
+}
+
+.right-icon {
+    float: right;
+    font-size: 25px;
+    line-height: 2;
+}
+
+.clear {
+    clear: both;
 }

@@ -2,68 +2,77 @@
 
   <div>
     <div class="list">
+      <div class="list-group">
+        <div class="list-group-item">
+          <h3 class="session-title" style="float: none; margin-bottom: 0px;">
+                <a href="#/app/patients">
+                  <span class="gray">Patient:</span> 
+                  <span ng-if="machine.session.patient.firstName || machine.session.patient.lastName" class="white">
+                    {{ machine.session.patient.firstName }} {{ machine.session.patient.lastName }}
+                  </span>
+                  <span ng-if="!machine.session.patient.firstName && !machine.session.patient.lastName">-</span>
+                </a>
+            </h3>
+        </div>
+        <div class="list-group-item center">
+            <h3 class="session-title">
+              Knee Angle
+            </h3>
+            <h1 class="session-number">
+              <span ng-if="machine.angle != undefined">
+                {{ machine.angle | number : 0 }}&deg;
+              </span>
+              <span ng-if="machine.angle == undefined">-</span>
+            </h1>
+        </div>
+        <div class="list-group-item center">
+            <h3 class="session-title">
+              Hold Time
+            </h3>
+            <h1 class="session-number" ng-class="{red: machine.session.holdTime >0 && machine.session.holdTime < 30, green: machine.session.holdTime >= 30}">
+              <span ng-if="machine.session.holdTime != null">
+                {{ machine.session.holdTime | secondsToDateTime | date:'mm:ss'}}
+              </span>
+              <span ng-if="machine.session.holdTime == null">-</span>
+            </h1>
+        </div>
+        <div class="list-group-item">
+          <h3 class="session-title" style="float: none; margin-bottom: 0px;">
+                Total Time: 
+                <span ng-if="machine.session.sessionTime != null" class="white">
+                  {{ machine.session.sessionTime | secondsToDateTime | date:'mm:ss'}}
+                </span>
+                <span ng-if="machine.session.sessionTime == null">-</span>
+                <button class="btn btn-primary btn-sm" style="float: right;">
+                  RESET
+                </button>
+            </h3>
+        </div>
+        <div class="list-group-item center">
+          <h3 class="session-title">
+              This Session
+          </h3>
+          
+          <span style="clear: both">&nbsp;</span>
+        </div>
 
-      <div class="item item-divider">
-        {{ machine.session.patient.firstName }} {{ machine.session.patient.lastName }}
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="item item-text-wrap center">
-                <h1>{{ machine.angle | number : 0 }}&deg;</h1>
-                <span>Knee Angle</span>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="item item-text-wrap center">
-              <h1>{{ machine.session.holdTime | number : 0 }}</h1>
-              <span>Hold Time</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="item item-text-wrap center">
-              <h1>{{ machine.session.lowAngle | number : 0 }}&deg;</h1>
-              <span>Low Angle</span>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="item item-text-wrap center">
-              <h1>{{ machine.session.highAngle | number : 0 }}&deg;</h1>
-              <span>High Angle</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="item item-text-wrap center">
-              <h1>{{ machine.session.repetitions | number : 0 }}</h1>
-              <span>Repetitions</span>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="item item-text-wrap center">
-              <h1>{{ machine.session.sessionTime | number : 0 | secondsToDateTime | date:'mm:ss'}}</h1>
-              <span>Session Time</span>
-            </div>
-          </div>
+        <div class="list-group-item">
+          <button class="btn btn-block btn-primary" ng-click="stopSession();">Stop Session</button>
         </div>
       </div>
 
-      <div class="item">
-        <button class="button button-balanced" ng-click="stopSession();">Stop Session</button>
-      </div>
+        <!--<div class="list-group-item center">
+          <span>Low Angle</span>
+          <h1>{{ machine.session.lowAngle | number : 0 }}&deg;</h1>
+        </div>
+        <div class="list-group-item center">
+          <span>High Angle</span>
+          <h1>{{ machine.session.highAngle | number : 0 }}&deg;</h1>
+        </div>
+        <div class="list-group-item center">
+          <h1>{{ machine.session.repetitions | number : 0 }}</h1>
+          <span>Repetitions</span>
+        </div>-->
 
       <!--<div class="item item-divider">
           Machine State

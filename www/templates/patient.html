@@ -1,26 +1,25 @@
 <div view-title="Patient">
   <div>
-
-    <div class="list">
-      <div class="item item-divider">
-          Information
+    <div class="list-group" class="clear">
+      <div class="list-group-item">
+        <a href="#/app/patients">
+          <button class="btn btn-primary">Go Back</button>
+        </a>
+        <button class="btn btn-primary" style="float: right" ng-click="startNewSession();">Start New Session</button>
       </div>
-      <div class="item">
+      <div class="list-group-item">
           First Name: {{ patient.firstName }} <br/>
           Last Name: {{ patient.lastName }} <br/>
       </div>
-      <div class="item">
-          <button class="button button-balanced" ng-click="startNewSession();">Start New Session</button>
-      </div>
-      <div class="item item-divider">
+      <div class="list-group-item">
           Sessions
+        <ul class="item">
+          <li ng-repeat="session in patient.sessions track by $index" class="item-remove-animate item-icon-right" href="#/app/session/{{session.id}}">
+            <p>{{ session.startTime }}</p>
+            <i class="icon glyphicon glyphicon-chevron-right"></i>
+          </li>
+        </ul>
       </div>
-      <ul class="item">
-        <li ng-repeat="session in patient.sessions track by $index" class="item-remove-animate item-icon-right" href="#/app/session/{{session.id}}">
-          <p>{{ session.startTime }}</p>
-          <i class="icon glyphicon glyphicon-chevron-right"></i>
-        </li>
-      </ul>
     </div>
 
 
