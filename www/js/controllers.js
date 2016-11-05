@@ -1,17 +1,12 @@
-angular.module('therapyui.controllers', ['ionic'])
+angular.module('therapyui.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $timeout) {
 
-  $scope.$on('$ionicView.enter', function(e) {
-      console.log("App Started");
-
-  });
 
 })
 
-.controller('PatientsCtrl', function($scope, Machine, $location, $ionicPopup, $ionicListDelegate) {
-    $scope.$on('$ionicView.enter', function(e) {
-    });
+.controller('PatientsCtrl', function($scope, Machine, $location) {
+
     $scope.form = {search: ""};
     $scope.patients = [];
     $scope.newPatient = {firstName: "", lastName: ""};
@@ -29,11 +24,10 @@ angular.module('therapyui.controllers', ['ionic'])
     $scope.clearSearch = function() {
         console.log('Clear Search');
         $scope.form.search = "";
-        $ionicListDelegate.closeOptionButtons();
     };
 
     $scope.patientSelected = function() {
-        $ionicListDelegate.closeOptionButtons();
+        
     };
 
     $scope.showPatient = function(patient) {
@@ -74,53 +68,51 @@ angular.module('therapyui.controllers', ['ionic'])
                 $scope.loadPatients();
                 $location.path("/app/patient/" + response.id);
             }).error(function(response) {
-                $ionicPopup.alert({
-                   title: 'Error',
-                   template: 'Error adding patient'
-                });
+                // $ionicPopup.alert({
+                //    title: 'Error',
+                //    template: 'Error adding patient'
+                // });
             });
         } else {
-            $ionicPopup.alert({
-               title: 'Missing Data',
-               template: 'Please provide a First Name and Last Name'
-            });
+            // $ionicPopup.alert({
+            //    title: 'Missing Data',
+            //    template: 'Please provide a First Name and Last Name'
+            // });
         }
     };
 
      $scope.deletePatient = function(patient) {
 
-          var confirmPopup = $ionicPopup.confirm({
-              title: 'Delete Patient',
-              template: 'Are you sure you want to delete this patient?'
-          });
+        //   var confirmPopup = $ionicPopup.confirm({
+        //       title: 'Delete Patient',
+        //       template: 'Are you sure you want to delete this patient?'
+        //   });
 
-          confirmPopup.then(function(res) {
-              if(res) {
-                  Machine.deletePatient(patient.id)
-                     .success(function(response) {
-                          console.log(JSON.stringify(response));
-                          $scope.loadPatients();
-                          $ionicListDelegate.closeOptionButtons();
-                     }).error(function(response) {
-                         $ionicPopup.alert({
-                            title: 'Error',
-                            template: 'Error deleting patient'
-                         });
-                     });
-              } else {
-                  // No
-                  $ionicListDelegate.closeOptionButtons();
-              }
-          });
+        //   confirmPopup.then(function(res) {
+        //       if(res) {
+        //           Machine.deletePatient(patient.id)
+        //              .success(function(response) {
+        //                   console.log(JSON.stringify(response));
+        //                   $scope.loadPatients();
+        //                   $ionicListDelegate.closeOptionButtons();
+        //              }).error(function(response) {
+        //                  $ionicPopup.alert({
+        //                     title: 'Error',
+        //                     template: 'Error deleting patient'
+        //                  });
+        //              });
+        //       } else {
+        //           // No
+        //           $ionicListDelegate.closeOptionButtons();
+        //       }
+        //   });
     };
 
     $scope.loadPatients();
 })
 
 .controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
-    $scope.$on('$ionicView.enter', function(e) {
-        console.log("Patient..." + JSON.stringify($stateParams));
-    });
+
     $scope.patient = {};
     $scope.loadPatient = function() {
         Machine.loadPatient($stateParams.patientId).then(function(response) {
@@ -135,19 +127,16 @@ angular.module('therapyui.controllers', ['ionic'])
                 console.log("startSession: " + JSON.stringify(response));
                 $state.go("app.current");
           }).error(function(response) {
-               $ionicPopup.alert({
-                  title: 'Error',
-                  template: 'Error starting new session'
-               });
+            //    $ionicPopup.alert({
+            //       title: 'Error',
+            //       template: 'Error starting new session'
+            //    });
           });
     };
     $scope.loadPatient();
 })
 
 .controller('SessionCtrl', function($scope, $stateParams, Machine) {
-    $scope.$on('$ionicView.enter', function(e) {
-        console.log("Session..." + JSON.stringify($stateParams));
-    });
     $scope.session = {};
     $scope.loadSession = function() {
         Machine.loadSession($stateParams.sessionId).then(function(response) {
@@ -159,9 +148,6 @@ angular.module('therapyui.controllers', ['ionic'])
 })
 
 .controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
-    $scope.$on('$ionicView.enter', function(e) {
-        console.log("Settings..." + JSON.stringify($stateParams));
-    });
     $scope.machine = {};
     $scope.running = true;
       var timer = $interval(function() {
@@ -178,17 +164,17 @@ angular.module('therapyui.controllers', ['ionic'])
             .success(function(response) {
                  $scope.machine = response.data;
             }).error(function(response) {
-                 $ionicPopup.alert({
-                    title: 'Error',
-                    template: 'Error calibrating angle voltage'
-                 });
+                //  $ionicPopup.alert({
+                //     title: 'Error',
+                //     template: 'Error calibrating angle voltage'
+                //  });
             });
       };
 
-      $scope.$on('$ionicView.leave', function(e) {
-          console.log("Leaving settings...");
-          $scope.running = false;
-      });
+    //   $scope.$on('$ionicView.leave', function(e) {
+    //       console.log("Leaving settings...");
+    //       $scope.running = false;
+    //   });
 })
 
 .controller('CurrentSessionCtrl', function($scope, $state, $interval, Machine) {
@@ -196,7 +182,7 @@ angular.module('therapyui.controllers', ['ionic'])
   $scope.machine = {};
   $scope.machine.joystick = 0;
 
-  $scope.$on('$ionicView.enter', function(e) {
+  //$scope.$on('$ionicView.enter', function(e) {
       console.log("Demo start...");
       $scope.running = true;
       var timer = $interval(function() {
@@ -209,12 +195,12 @@ angular.module('therapyui.controllers', ['ionic'])
             });
           }
       }, 500);
-  });
+  //});
 
-  $scope.$on('$ionicView.leave', function(e) {
-      console.log("Leaving current...");
-      $scope.running = false;
-  });
+//   $scope.$on('$ionicView.leave', function(e) {
+//       console.log("Leaving current...");
+//       $scope.running = false;
+//   });
 
   $scope.stopSession = function() {
       console.log("stop session");
@@ -223,10 +209,10 @@ angular.module('therapyui.controllers', ['ionic'])
             console.log("stopSession: " + JSON.stringify(response));
             $state.go("app.patient", {'patientId' : $scope.machine.session.patient.id });
       }).error(function(response) {
-           $ionicPopup.alert({
-              title: 'Error',
-              template: 'Error stopping session'
-           });
+        //    $ionicPopup.alert({
+        //       title: 'Error',
+        //       template: 'Error stopping session'
+        //    });
       });
   };
 

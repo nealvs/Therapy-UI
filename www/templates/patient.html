@@ -1,5 +1,5 @@
-<ion-view view-title="Patient">
-  <ion-content>
+<div view-title="Patient">
+  <div>
 
     <div class="list">
       <div class="item item-divider">
@@ -15,17 +15,14 @@
       <div class="item item-divider">
           Sessions
       </div>
-      <ion-list class="item">
-        <ion-item ng-repeat="session in patient.sessions track by $index" class="item-remove-animate item-icon-right" href="#/app/session/{{session.id}}">
+      <ul class="item">
+        <li ng-repeat="session in patient.sessions track by $index" class="item-remove-animate item-icon-right" href="#/app/session/{{session.id}}">
           <p>{{ session.startTime }}</p>
-          <i class="icon ion-chevron-right icon-accessory"></i>
-          <ion-option-button class="ion-trash-b icon-right button-assertive" ng-click="delete(patient)">
-            &nbsp; Delete
-          </ion-option-button>
-        </ion-item>
-      </ion-list>
+          <i class="icon glyphicon glyphicon-chevron-right"></i>
+        </li>
+      </ul>
     </div>
 
 
-  </ion-content>
-</ion-view>
+  </div>
+</div>

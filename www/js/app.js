@@ -1,9 +1,8 @@
-angular.module('therapyui', ['ionic', 'ng-virtual-keyboard', 'therapyui.controllers', 'therapyui.machine-service', 'therapyui.common'])
+angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.controllers', 'therapyui.machine-service', 'therapyui.common'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+.run(function() {
+    console.log("Starting therapypi app")
 
-  });
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -11,7 +10,7 @@ angular.module('therapyui', ['ionic', 'ng-virtual-keyboard', 'therapyui.controll
     .state('app', {
       url: '/app',
       abstract: true,
-      templateUrl: 'templates/menu.html',
+      templateUrl: 'templates/menu.html', 
       controller: 'AppCtrl'
     })
     .state('app.current', {

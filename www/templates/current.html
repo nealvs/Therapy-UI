@@ -1,6 +1,6 @@
-<ion-view view-title="">
+<div>
 
-  <ion-content>
+  <div>
     <div class="list">
 
       <div class="item item-divider">
@@ -82,9 +82,9 @@
       </div>
       <div class="item">
         <div class="item range">
-          <i class="icon ion-ios-rewind"></i>
+          <i class="icon glyphicon glyphicon-backward"></i>
           <input type="range" ng-model="machine.joystickSlider" min="0" max="500" value="250" ng-change="updateJoystick()">
-          <i class="icon ion-ios-fastforward"></i>
+          <i class="icon glyphicon glyphicon-forward"></i>
         </div>
       </div>
 
@@ -94,10 +94,10 @@
           <!--Stop Session-->
         <!--</button>-->
         <button class="button icon-left button-calm" style="float: right;" ng-click="reset()">
-          <i class="icon ion-ios-reload"></i>
+          <i class="icon glyphicon glyphicon-refresh"></i>
           Reset
         </button>
       </div>
     </div>
-  </ion-content>
-</ion-view>
+  </div>
+</div>
