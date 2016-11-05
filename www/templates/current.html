@@ -4,14 +4,14 @@
     <div class="list">
 
       <div class="item item-divider">
-        Session Info: {{ machine.session.patient.firstName }} {{ machine.session.patient.lastName }}
+        {{ machine.session.patient.firstName }} {{ machine.session.patient.lastName }}
       </div>
       <div class="row">
         <div class="col">
           <div class="card">
             <div class="item item-text-wrap center">
                 <h1>{{ machine.angle | number : 0 }}&deg;</h1>
-                <span>Angle</span>
+                <span>Knee Angle</span>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
         <button class="button button-balanced" ng-click="stopSession();">Stop Session</button>
       </div>
 
-      <div class="item item-divider">
+      <!--<div class="item item-divider">
           Machine State
       </div>
       <div class="card">
@@ -93,11 +93,12 @@
           <!--<i class="icon ion-stop"></i>-->
           <!--Stop Session-->
         <!--</button>-->
+      <!--
         <button class="button icon-left button-calm" style="float: right;" ng-click="reset()">
           <i class="icon glyphicon glyphicon-refresh"></i>
           Reset
         </button>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

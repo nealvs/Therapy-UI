@@ -5,7 +5,9 @@ angular.module('therapyui.common', [])
     service.baseUrl = 'http://localhost:8686'
 
     service.get = function(path) {
-        console.log("GET " + path);
+        if(path != "/status") {
+            console.log("GET " + path);
+        }
         $q = $http({
             method: 'GET',
             url: service.baseUrl + path

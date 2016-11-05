@@ -1,6 +1,4 @@
 <div>
-  <br/>
-  <br/>
   <div class="bar-subheader" style="height: 60px; border-bottom: 0px; top: 37px;">
     <button style="height: 50px;" class="btn btn-lg btn-block btn-primary" ng-if="!showNewPatientForm" ng-click="addPatient()">New Patient</button>
   </div>
@@ -38,23 +36,26 @@
       </form>
     </div>
 
-
+    <br/>
     <div ng-if="!showNewPatientForm">
       <center ng-if="!patients.list || patients.list.length == 0" style="margin-top: 40px;">
         No Patients Found
       </center>
       <div ng-if="patients.list && patients.list.length > 0" style="margin-bottom: 10px;">
-        <label class="item item-input">
-          <input type="text" placeholder="Search" ng-model="form.search" ng-virtual-keyboard/>
-        </label>
-        <button ng-if="form.search.length" class="input-button btn btn-icon glyphicon glyphicon-remove" ng-click="clearSearch()"></button>
+        <form>
+          <label class="item item-input" style="width: 85%">
+            <input type="text" placeholder="Search" ng-model="form.search" class="form-control input-lg" ng-virtual-keyboard/>
+          </label>
+          <button ng-if="form.search.length" class="input-button btn btn-primary btn-lg btn-icon glyphicon glyphicon-remove" ng-click="clearSearch()"></button>
+        </form>
       </div>
       <br/>
-      <ul>
-        <li ng-repeat="patient in patients.list track by $index" ng-if="showPatient(patient)" ng-click="patientSelected()" class="item-remove-animate item-icon-right" href="#/app/patient/{{patient.id}}">
-          <p>{{ patient.lastName }}, {{ patient.firstName }}</p>
-
-          <i class="icon glyphicon glyphicon-chevron-right"></i>
+      <ul class="list-group">
+        <li ng-repeat="patient in patients.list track by $index" ng-if="showPatient(patient)" ng-click="patientSelected()" class="list-group-item">
+          <a href="#/app/patient/{{patient.id}}">
+            <span style="float: right;" class="glyphicon glyphicon-chevron-right"></span>
+            <h3>{{ patient.lastName }}, {{ patient.firstName }}</h3>
+          </a>
         </li>
       </ul>
     </div>
