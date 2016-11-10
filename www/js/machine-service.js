@@ -7,8 +7,8 @@ angular.module('therapyui.machine-service', [])
         return Common.get('/status');
     };
 
-    service.loadPatients = function() {
-        return Common.get('/patientList');
+    service.loadPatients = function(all) {
+        return Common.get('/patientList?all=' + all);
     };
     service.loadPatient = function(id) {
         return Common.get('/patient/' + id);

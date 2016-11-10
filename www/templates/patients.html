@@ -38,7 +38,9 @@
 
     <div ng-if="!showNewPatientForm">
       <center ng-if="!patients.list || patients.list.length == 0" style="margin-top: 40px;">
-        No Patients Found
+        <h3>No <span ng-if="!loadAll">Recent</span> Patients</h3>
+        <br/>
+        <br/>
       </center>
       <div ng-if="patients.list && patients.list.length > 0" style="margin-bottom: 10px;">
         <form>
@@ -48,7 +50,7 @@
           <button ng-if="form.search.length" class="input-button btn btn-primary btn-lg btn-icon glyphicon glyphicon-remove" ng-click="clearSearch()"></button>
         </form>
       </div>
-      <ul class="list-group">
+      <ul class="list-group" style="max-height: 520px; overflow-y: auto">
         <li ng-repeat="patient in patients.list track by $index" ng-if="showPatient(patient)" ng-click="patientSelected()" class="list-group-item">
           <a href="#/app/patient/{{patient.id}}">
             <span class="glyphicon glyphicon-chevron-right right-icon"></span>
@@ -56,6 +58,14 @@
           </a>
         </li>
       </ul>
+      <div class="btn-group" data-toggle="buttons" style="width: 100%">
+        <label class="btn btn-primary active" style="width: 50%" ng-click="loadPatients(false);">
+          <input type="radio" name="recentButton" id="recentButton" autocomplete="off" ng-checked="!loadAll"> Recent Patients
+        </label>
+        <label class="btn btn-primary" style="width: 50%" ng-click="loadPatients(true);">
+          <input type="radio" name="allButton" id="allButton" autocomplete="off" ng-checked="!loadAll"> All Patients
+        </label>
+      </div>
     </div>
   </div>
 </div>

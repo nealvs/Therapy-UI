@@ -10,9 +10,11 @@ angular.module('therapyui.controllers', [])
     $scope.form = {search: ""};
     $scope.patients = [];
     $scope.newPatient = {firstName: "", lastName: ""};
+    $scope.loadAll = false;
 
-    $scope.loadPatients = function() {
-        Machine.loadPatients().then(function(response) {
+    $scope.loadPatients = function(all) {
+        $scope.loadAll = all;
+        Machine.loadPatients(all).then(function(response) {
             $scope.patients.list = response.data.patients;
             console.log("Patients: " + $scope.patients.list.length);
             try {
@@ -29,6 +31,7 @@ angular.module('therapyui.controllers', [])
     $scope.patientSelected = function() {
         
     };
+
 
     $scope.showPatient = function(patient) {
         if($scope.form.search && patient) {
@@ -65,7 +68,7 @@ angular.module('therapyui.controllers', [])
             .success(function(response) {
                 console.log(JSON.stringify(response));
                 $scope.showNewPatientForm = false;
-                $scope.loadPatients();
+                $scope.loadPatients($scope.loadAll);
                 $location.path("/app/patient/" + response.id);
             }).error(function(response) {
                 // $ionicPopup.alert({
@@ -108,7 +111,7 @@ angular.module('therapyui.controllers', [])
         //   });
     };
 
-    $scope.loadPatients();
+    $scope.loadPatients(false);
 })
 
 .controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
@@ -156,7 +159,7 @@ angular.module('therapyui.controllers', [])
                 $scope.machine = response.data;
             });
           }
-      }, 500);
+      }, 100);
 
       $scope.calibrate = function() {
           console.log("calibrate");
