@@ -44,3 +44,10 @@ table.calibration {
 .clear {
     clear: both;
 }
+
+.bigger {
+    font-size: 25px; 
+}
+.ui-keyboard-preview-wrapper input.bigger {
+    font-size: 25px !important;
+}

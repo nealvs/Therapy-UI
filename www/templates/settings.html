@@ -1,88 +1,108 @@
 <div>
 
-  <div>
     <div class="list-group">
 
-      <div class="list-group-item">
-      
-        <table class="calibration">
-          <tr>
-            <td>
-              <span class="large-text white">Calibrated Voltage:</span>
-            </td>
-            <td>
-              <span class="large-text white">{{ machine.angleCalibrationVoltage | number : 2 }}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="large-text white">Encoder Voltage:</span>
-            </td>
-            <td>
-              <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="large-text white">Angle Reading:</span>
-            </td>
-            <td>
-              <span class="large-text white">{{ machine.angle | number : 0 }}&deg;</span>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              &nbsp;
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <button class="btn btn-block btn-lg btn-primary" ng-click="calibrate();">
-                <span class="glyphicon glyphicon-wrench"></span>
-                Calibrate at 90&deg
-              </button>
-            </td>
-          </tr>
-        </table>
+      <div ng-if="settings.mode == 'all'">
+        <div class="list-group-item">
+        
+          <table class="calibration">
+            <tr>
+              <td>
+                <span class="large-text white">Calibrated Voltage:</span>
+              </td>
+              <td>
+                <span class="large-text white">{{ machine.angleCalibrationVoltage | number : 2 }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="large-text white">Encoder Voltage:</span>
+              </td>
+              <td>
+                <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="large-text white">Angle Reading:</span>
+              </td>
+              <td>
+                <span class="large-text white">{{ machine.angle | number : 0 }}&deg;</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <button class="btn btn-block btn-lg btn-primary bigger" ng-click="calibrate();">
+                  <span class="glyphicon glyphicon-wrench"></span>
+                  Calibrate at 90&deg
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <br/>
+        <div class="list-group-item">
+          <form class="form-inline">
+            <label for="holdTime">
+              <h3>Hold Time (seconds):</h3>
+            </label>
+            <input id="holdTime" type="text" class="num input-lg form-control bigger" style="display: inline-block; width: 70px;" maxlength="2" ng-model="settings.holdTimeConfig" />
+            <button class="btn btn-primary bigger" style="margin-top: -10px" ng-click="setHoldTime();">Set</button>
+          </form>
+        </div>
+        <br/>
+        <div class="list-group-item">
+          <button class="btn btn-block btn-lg btn-primary bigger" ng-click="changePassword();">
+            <span class="glyphicon glyphicon-lock"></span>
+            Change Password
+          </button>
+          <button class="btn btn-block btn-lg btn-primary bigger" ng-click="clearDatabase();">
+            <span class="glyphicon glyphicon-trash"></span>
+            Clear Database
+          </button>
+        </div>
       </div>
-      <br/>
-      <div class="list-group-item">
-        <form class="form-inline">
-          <label for="holdTime">
-            <h3>Hold Time (seconds):</h3>
-          </label>
-          <input id="holdTime" type="text" class="input-lg form-control" style="display: inline-block; width: 70px;" maxlength="2" ng-model="machine.holdTimeConfig" ng-virtual-keyboard />
-          <button class="btn btn-lg btn-primary" ng-click="clearDatabase();">Set</button>
-        </form>
-      </div>
-      <div class="list-group-item">
-        <button class="btn btn-block btn-lg btn-primary" ng-click="changePassword();">
-          <span class="glyphicon glyphicon-lock"></span>
-          Change Password
-        </button>
-        <button class="btn btn-block btn-lg btn-primary" ng-click="clearDatabase();">
-          <span class="glyphicon glyphicon-trash"></span>
-          Clear Database
-        </button>
+
+      <div ng-if="settings.mode == 'password'">
+        <button class="btn btn-block btn-lg btn-primary bigger">Change Password</button>
+        <button class="btn btn-block btn-lg btn-primary bigger" ng-click="settings.mode = 'all'">Cancel</button>
       </div>
 
       <br/>
-      <h3>Return To:</h3>
+      <br/>
+      <br/>
+      <div class="list-group-item">
+        <a ng-click="goBack()">
+          <button class="btn btn-block btn-lg btn-primary bigger">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+            <span>Go Back</span>
+          </button>
+        </a>
+      </div>
+
+      <!--<h3>Return To:</h3>
       <div class="list-group-item">
         <a href="#/app/patients">
-          <button class="btn btn-block btn-lg btn-primary">
+          <button class="btn btn-block btn-lg btn-primary bigger">
             <span class="glyphicon glyphicon-user"></span>
             <span>Patient List</span>
           </button>
         </a>
         <a href="#/app/current">
-          <button class="btn btn-block btn-lg btn-primary">
+          <button class="btn btn-block btn-lg btn-primary bigger">
             <span class="glyphicon glyphicon-time"></span>
             <span>Current Session</span>
           </button>
-        </a>
+        </a>-->
       </div>
 
     </div>
   </div>
+
+
 </div>

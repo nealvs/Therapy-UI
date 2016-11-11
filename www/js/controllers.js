@@ -84,33 +84,6 @@ angular.module('therapyui.controllers', [])
         }
     };
 
-     $scope.deletePatient = function(patient) {
-
-        //   var confirmPopup = $ionicPopup.confirm({
-        //       title: 'Delete Patient',
-        //       template: 'Are you sure you want to delete this patient?'
-        //   });
-
-        //   confirmPopup.then(function(res) {
-        //       if(res) {
-        //           Machine.deletePatient(patient.id)
-        //              .success(function(response) {
-        //                   console.log(JSON.stringify(response));
-        //                   $scope.loadPatients();
-        //                   $ionicListDelegate.closeOptionButtons();
-        //              }).error(function(response) {
-        //                  $ionicPopup.alert({
-        //                     title: 'Error',
-        //                     template: 'Error deleting patient'
-        //                  });
-        //              });
-        //       } else {
-        //           // No
-        //           $ionicListDelegate.closeOptionButtons();
-        //       }
-        //   });
-    };
-
     $scope.loadPatients(false);
 })
 
@@ -136,6 +109,26 @@ angular.module('therapyui.controllers', [])
             //    });
           });
     };
+
+    $scope.deletePatient = function(patient) {
+        var confirmPopup = confirm('Are you sure you want to delete this patient?');
+
+        // confirmPopup.then(function(res) {
+        //     if(res) {
+        //         Machine.deletePatient(patient.id)
+        //             .success(function(response) {
+        //                 console.log(JSON.stringify(response));
+        //                 $scope.loadPatients();
+        //             }).error(function(response) {
+        //                 $ionicPopup.alert({
+        //                 title: 'Error',
+        //                 template: 'Error deleting patient'
+        //                 });
+        //             });
+        //     } 
+        // });
+    };
+
     $scope.loadPatient();
 })
 
@@ -152,11 +145,19 @@ angular.module('therapyui.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
     $scope.machine = {};
+    $scope.settings = { mode: 'password', holdTimeConfig: null, password: null };
     $scope.running = true;
       var timer = $interval(function() {
           if($scope.running) {
             Machine.getStatus().then(function(response) {
-                $scope.machine = response.data;
+                if(response.data) {
+                    $scope.machine = response.data;
+                    if(!$scope.settings.holdTimeConfig) {
+                        console.log($scope.machine.holdTimeConfig);
+                        $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
+                        $scope.settings.password = $scope.machine.password;
+                    }
+                }
             });
           }
       }, 100);
@@ -173,6 +174,40 @@ angular.module('therapyui.controllers', [])
                 //  });
             });
       };
+
+      $scope.setHoldTime = function() {
+          console.log("Set hold time: " + $scope.settings.holdTimeConfig);
+          if($scope.settings.holdTimeConfig) {
+
+          }
+      };
+
+      $scope.changePassword = function() {
+          $scope.settings.mode = 'password';
+      };
+
+      $scope.clearDatabase = function() {
+
+      };
+
+      $scope.goBack = function() {
+        window.history.back();
+      };
+
+      $('.num')
+        .keyboard({
+            layout : 'custom',
+            customLayout: {
+                'normal': [
+                    '1 2 3 4 5',
+                    '6 7 8 9 0',
+                    '{bksp} {cancel} {accept}'
+                ]
+            },
+            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+            preventPaste : true,  // prevent ctrl-v and right click
+            autoAccept : true
+        });
 
     //   $scope.$on('$ionicView.leave', function(e) {
     //       console.log("Leaving settings...");

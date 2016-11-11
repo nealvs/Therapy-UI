@@ -1,7 +1,9 @@
 <div>
   <br/>
   <div class="bar-subheader" style="height: 60px; border-bottom: 0px; top: 37px;">
-    <button style="height: 50px;" class="btn btn-lg btn-block btn-primary" ng-if="!showNewPatientForm" ng-click="addPatient()">New Patient</button>
+    <button style="height: 50px;" class="btn btn-block btn-primary bigger" ng-if="!showNewPatientForm" ng-click="addPatient()">
+      New Patient
+      </button>
   </div>
 
   <div>
@@ -9,26 +11,26 @@
       <form>
         <div class="form-group">
           <label for="firstName">
-            <span class="input-label"><h4>First Name</h4></span>
+            <span class="input-label bigger">First Name</span>
           </label>
-          <input id="firstName" type="text" class="form-control input-lg" ng-model="newPatient.firstName" placeholder="First Name" ng-virtual-keyboard />
+          <input id="firstName" type="text" class="form-control input-lg bigger" ng-model="newPatient.firstName" ng-virtual-keyboard />
         </div>
         <div class="form-group">
           <label for="lastName">
-            <span class="input-label"><h4>Last Name</h4></span>
+            <span class="input-label bigger">Last Name</span>
           </label>
-          <input id="lastName" type="text" class="form-control input-lg" ng-model="newPatient.lastName" placeholder="Last Name" ng-virtual-keyboard />
+          <input id="lastName" type="text" class="form-control input-lg bigger" ng-model="newPatient.lastName" ng-virtual-keyboard />
         </div>
         <br/>
         <div class="row">
           <div class="col-md-6">
-            <button class="btn btn-block btn-lg btn-primary" ng-click="createPatient()">
+            <button class="btn btn-block btn-lg btn-primary bigger" ng-click="createPatient()">
                Add Patient
             </button>
           </div>
           <br/>
           <div class="col-md-6">
-            <button class="btn btn-block btn-lg btn-default" ng-click="cancel()">
+            <button class="btn btn-block btn-lg btn-default bigger" ng-click="cancel()">
                Cancel
             </button>
           </div>
@@ -45,12 +47,12 @@
       <div ng-if="patients.list && patients.list.length > 0" style="margin-bottom: 10px;">
         <form>
           <label class="item item-input" style="width: 85%">
-            <input type="text" placeholder="Search" ng-model="form.search" class="form-control input-lg" ng-virtual-keyboard/>
+            <input type="text" placeholder="Search" ng-model="form.search" class="form-control input-lg bigger" ng-virtual-keyboard/>
           </label>
           <button ng-if="form.search.length" class="input-button btn btn-primary btn-lg btn-icon glyphicon glyphicon-remove" ng-click="clearSearch()"></button>
         </form>
       </div>
-      <ul class="list-group" style="max-height: 520px; overflow-y: auto">
+      <ul class="list-group" style="max-height: 500px; overflow-y: auto">
         <li ng-repeat="patient in patients.list track by $index" ng-if="showPatient(patient)" ng-click="patientSelected()" class="list-group-item">
           <a href="#/app/patient/{{patient.id}}">
             <span class="glyphicon glyphicon-chevron-right right-icon"></span>
@@ -60,10 +62,12 @@
       </ul>
       <div class="btn-group" data-toggle="buttons" style="width: 100%">
         <label class="btn btn-primary active" style="width: 50%" ng-click="loadPatients(false);">
-          <input type="radio" name="recentButton" id="recentButton" autocomplete="off" ng-checked="!loadAll"> Recent Patients
+          <input type="radio" name="recentButton" id="recentButton" autocomplete="off" ng-checked="!loadAll"> 
+          <span class="bigger">Recent Patients</span>
         </label>
         <label class="btn btn-primary" style="width: 50%" ng-click="loadPatients(true);">
-          <input type="radio" name="allButton" id="allButton" autocomplete="off" ng-checked="!loadAll"> All Patients
+          <input type="radio" name="allButton" id="allButton" autocomplete="off" ng-checked="!loadAll"> 
+          <span class="bigger">All Patients</span>
         </label>
       </div>
     </div>
