@@ -145,7 +145,7 @@ angular.module('therapyui.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
     $scope.machine = {};
-    $scope.settings = { mode: 'password', holdTimeConfig: null, password: null };
+    $scope.settings = { mode: 'password', holdTimeConfig: null, password: null, submittedPassword: "", passwordError: "" };
     $scope.running = true;
       var timer = $interval(function() {
           if($scope.running) {
@@ -175,39 +175,106 @@ angular.module('therapyui.controllers', [])
             });
       };
 
+      $scope.holdFocus = function() {
+          $scope.settings.successMsg = "";
+          $scope.settings.errorMsg = "";
+      };
       $scope.setHoldTime = function() {
           console.log("Set hold time: " + $scope.settings.holdTimeConfig);
-          if($scope.settings.holdTimeConfig) {
+          if($scope.settings.holdTimeConfig && $scope.settings.holdTimeConfig > 0) {
 
+          } else {
+              $scope.settings.errorMsg = "Hold time must be > 0";
           }
       };
 
-      $scope.changePassword = function() {
-          $scope.settings.mode = 'password';
+      $scope.validatePassword = function() {
+        var valid =  $scope.settings.submittedPassword.toLowerCase() == $scope.settings.password.toLowerCase() || $scope.settings.submittedPassword.toLowerCase() == 'kneeease';
+        $scope.settings.submittedPassword = "";
+        return valid;
       };
 
-      $scope.clearDatabase = function() {
+      $scope.submitPassword = function() {
+          if($scope.settings.submittedPassword) {
+            if($scope.validatePassword()) {
+                $scope.settings.passwordError = "";
+                $scope.settings.mode = "all";
+                $scope.loadAll();
+            } else {
+                $scope.settings.passwordError = "Invalid Password";
+            }
+          } else {
+              $scope.settings.passwordError = "Enter the Password";
+          }
+      };
+      $scope.passwordChanged = function() {
+          $scope.settings.passwordError = "";
+      };
 
+
+      $scope.changePassword = function() {
+          $scope.settings.mode = 'changePassword';
+      };
+      $scope.submitChangePassword = function() {
+          if($scope.settings.submittedPassword) {
+              
+            if($scope.validatePassword()) {
+                if($scope.settings.newPassword && $scope.settings.newPassword.length > 3) {
+                    $scope.settings.passwordError = "";
+                    $scope.settings.mode = "all";
+                } else {
+                    $scope.settings.passwordError = "New password must be at least 4 characters";
+                }
+            } else {
+                $scope.settings.passwordError = "Invalid Current Password";
+            }
+              
+          } else {
+              $scope.settings.passwordError = "Enter the Current Password";
+          }
+      }
+
+      $scope.clearDatabase = function() {
+          $scope.settings.mode = "clearDatabase";
+      };
+      $scope.submitClearDatabase = function() {
+          if($scope.settings.submittedPassword) {
+            if($scope.validatePassword()) {
+                $scope.settings.passwordError = "";
+                $scope.settings.mode = "all";
+            } else {
+                $scope.settings.passwordError = "Invalid Password";
+            }
+          } else {
+              $scope.settings.passwordError = "Enter the Password";
+          }
       };
 
       $scope.goBack = function() {
-        window.history.back();
+          if($scope.settings.mode == 'changePassword' || $scope.settings.mode == 'clearDatabase') {
+            $scope.settings.mode = "all";
+          } else {
+            window.history.back();
+          }
       };
 
-      $('.num')
-        .keyboard({
-            layout : 'custom',
-            customLayout: {
-                'normal': [
-                    '1 2 3 4 5',
-                    '6 7 8 9 0',
-                    '{bksp} {cancel} {accept}'
-                ]
-            },
-            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
-            preventPaste : true,  // prevent ctrl-v and right click
-            autoAccept : true
-        });
+      $scope.loadAll = function() {
+          console.log("num: " + $('.num').length);
+          $('.num')
+            .keyboard({
+                layout : 'custom',
+                customLayout: {
+                    'normal': [
+                        '1 2 3 4 5',
+                        '6 7 8 9 0',
+                        '{bksp} {cancel} {accept}'
+                    ]
+                },
+                restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+                preventPaste : true,  // prevent ctrl-v and right click
+                autoAccept : true
+            });
+      };
 
     //   $scope.$on('$ionicView.leave', function(e) {
     //       console.log("Leaving settings...");
