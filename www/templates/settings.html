@@ -51,9 +51,15 @@
             <label for="holdTime">
               <h3>Hold Time (seconds):</h3>
             </label>
-            <input id="holdTime" type="text" class="num input-lg form-control bigger" style="display: inline-block; width: 70px;" maxlength="2" ng-model="settings.holdTimeConfig" />
+            <input id="holdTime" type="text" class="num input-lg form-control bigger" ng-focus="holdFocus()" style="display: inline-block; width: 70px;" maxlength="2" ng-model="settings.holdTimeConfig" />
             <button class="btn btn-primary bigger" style="margin-top: -10px" ng-click="setHoldTime();">Set</button>
           </form>
+        </div>
+        <div ng-if="settings.errorMsg" class="alert alert-danger bigger" role="alert">
+            {{ settings.errorMsg }}
+          </div>
+        <div ng-if="settings.successMsg"  class="alert alert-success bigger" role="alert">
+            {{ settings.successMsg }}
         </div>
         <br/>
         <div class="list-group-item">
@@ -78,8 +84,63 @@
       </div>
 
       <div ng-if="settings.mode == 'password'">
-        <button class="btn btn-block btn-lg btn-primary bigger">Change Password</button>
-        <button class="btn btn-block btn-lg btn-primary bigger" ng-click="settings.mode = 'all'">Cancel</button>
+        <br/>
+        <div style="height: 55px;">
+          <div class="alert alert-danger bigger" ng-if="settings.passwordError" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            {{ settings.passwordError }}
+          </div>
+        </div>
+        <br/>
+        <div class="form-group">
+          <label for="password">
+            <span class="input-label bigger">Password</span>
+          </label>
+          <input id="password" type="password" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.submittedPassword" ng-virtual-keyboard />
+        </div>
+        <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitPassword()">Submit</button>
+      </div>
+
+      <div ng-if="settings.mode == 'changePassword'">
+        <br/>
+        <div style="height: 90px;">
+          <div class="alert alert-danger bigger" ng-if="settings.passwordError" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            {{ settings.passwordError }}
+          </div>
+        </div>
+        <br/>
+        <div class="form-group">
+          <label for="password">
+            <span class="input-label bigger">Current Password</span>
+          </label>
+          <input id="password" type="password" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.submittedPassword" ng-virtual-keyboard />
+        </div>
+        <div class="form-group">
+          <label for="password">
+            <span class="input-label bigger">New Password</span>
+          </label>
+          <input id="password" type="password" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.newPassword" ng-virtual-keyboard />
+        </div>
+        <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitChangePassword()">Submit</button>
+      </div>
+
+      <div ng-if="settings.mode == 'clearDatabase'">
+        <br/>
+        <div style="height: 55px;">
+          <div class="alert alert-danger bigger" ng-if="settings.passwordError" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            {{ settings.passwordError }}
+          </div>
+        </div>
+        <br/>
+        <div class="form-group">
+          <label for="password">
+            <span class="input-label bigger">Password</span>
+          </label>
+          <input id="password" type="password" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.submittedPassword" ng-virtual-keyboard />
+        </div>
+        <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitClearDatabase()">Clear Database</button>
       </div>
 
       <br/>
