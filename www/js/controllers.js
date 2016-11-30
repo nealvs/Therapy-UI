@@ -215,7 +215,7 @@ angular.module('therapyui.controllers', [])
     //   });
 })
 
-.controller('CurrentSessionCtrl', function($scope, $state, $interval, Machine) {
+.controller('CurrentSessionCtrl', function($scope, $location, $state, $interval, Machine) {
 
   $scope.machine = {};
   $scope.machine.joystick = 0;
@@ -245,7 +245,11 @@ angular.module('therapyui.controllers', [])
       Machine.stopSession()
       .success(function(response) {
             console.log("stopSession: " + JSON.stringify(response));
-            $state.go("app.patient", {'patientId' : $scope.machine.session.patient.id });
+            if($scope.machine && $scope.machine.session && $scope.machine.session.patient && $scope.machine.session.patient.id) {
+                $state.go("app.patient", {'patientId' : $scope.machine.session.patient.id });
+            } else {
+                $location.path("/app/patients");
+            }
       }).error(function(response) {
         //    $ionicPopup.alert({
         //       title: 'Error',
@@ -256,6 +260,12 @@ angular.module('therapyui.controllers', [])
 
   $scope.reset = function() {
       Machine.reset().then(function(response) {
+          $scope.machine = response.data;
+      });
+  };
+
+  $scope.resetSession = function() {
+      Machine.resetSession().then(function(response) {
           $scope.machine = response.data;
       });
   };

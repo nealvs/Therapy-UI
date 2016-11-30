@@ -3,20 +3,24 @@
     <div class="list-group" class="clear">
       <div class="list-group-item">
         <a href="#/app/patients">
-          <button class="btn btn-primary">Go Back</button>
+          <button class="btn btn-primary bigger">Go Back</button>
         </a>
-        <button class="btn btn-primary" style="float: right" ng-click="startNewSession();">Start New Session</button>
+        <button class="btn btn-primary bigger" style="float: right" ng-click="startNewSession();">Start New Session</button>
       </div>
       <div class="list-group-item">
-          First Name: {{ patient.firstName }} <br/>
-          Last Name: {{ patient.lastName }} <br/>
+          <span class="bigger">First Name: {{ patient.firstName }}</span> <br/>
+          <span class="bigger">Last Name: {{ patient.lastName }}</span> <br/>
       </div>
       <div class="list-group-item">
-          Sessions
-        <ul class="item">
-          <li ng-repeat="session in patient.sessions track by $index" class="item-remove-animate item-icon-right" href="#/app/session/{{session.id}}">
-            <p>{{ session.startTime }}</p>
-            <i class="icon glyphicon glyphicon-chevron-right"></i>
+        <span class="bigger">Sessions</span>
+        <br/>
+        <br/>
+        <ul class="list-group" style="max-height: 500px; overflow-y: auto">
+          <li ng-repeat="session in patient.sessions track by $index" class="list-group-item">
+            <a href="#/app/session/{{session.id}}">
+              <span class="glyphicon glyphicon-chevron-right right-icon"></span>
+              <h3>{{ session.startTime }}</h3>
+            </a>
           </li>
         </ul>
       </div>
