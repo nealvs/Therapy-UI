@@ -4,7 +4,7 @@
       <div class="list-group-item">
         <a href="#/app/patients">
           <button class="btn btn-primary bigger">
-            <span class="glyphicon glyphicon-arrow-left"></span>  
+            <span class="glyphicon glyphicon-arrow-left"></span>
             Go Back
           </button>
         </a>
@@ -14,8 +14,14 @@
         </button>
       </div>
       <div class="list-group-item bigger">
-          <span class="bigger">First Name: {{ patient.firstName }}</span> <br/>
-          <span class="bigger">Last Name: {{ patient.lastName }}</span> <br/>
+          <span class="bigger">
+              First Name:
+              <span class="white">{{ patient.firstName }}</span>
+          </span> <br/>
+          <span class="bigger">
+              Last Name:
+              <span class="white">{{ patient.lastName }}</span>
+          </span> <br/>
       </div>
       <div class="list-group-item">
         <span class="bigger">Sessions</span>
@@ -29,6 +35,9 @@
             </a>
           </li>
         </ul>
+        <div id="sessionsChart" ng-if="!patient.sessions || patient.sessions.length == 0">
+            <center><span>No Sessions</span></center>
+        </div>
       </div>
     </div>
 

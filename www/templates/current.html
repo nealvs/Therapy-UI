@@ -6,7 +6,7 @@
         <div class="list-group-item">
           <h3 class="session-title" style="float: none; margin-bottom: 0px;">
                 <a href="#/app/patients">
-                  <span class="gray">Patient:</span> 
+                  <span class="gray">Patient:</span>
                   <span ng-if="machine.session.patient.firstName || machine.session.patient.lastName" class="white">
                     {{ machine.session.patient.firstName }} {{ machine.session.patient.lastName }}
                   </span>
@@ -19,7 +19,7 @@
               Knee Angle
             </h3>
             <h1 class="session-number">
-              <span ng-if="machine.angle != undefined">
+              <span ng-if="machine.angle != undefined" class="one-height">
                 {{ machine.angle | number : 0 }}&deg;
               </span>
               <span ng-if="machine.angle == undefined">-</span>
@@ -29,8 +29,8 @@
             <h3 class="session-title">
               Hold Time
             </h3>
-            <h1 class="session-number" ng-class="{red: machine.session.holdTime >0 && machine.session.holdTime < 30, green: machine.session.holdTime >= 30}">
-              <span ng-if="machine.session.holdTime != null">
+            <h1 class="session-number" ng-class="{orange: machine.session.holdTime >0 && machine.session.holdTime < machine.holdTimeConfig, green: machine.session.holdTime >= machine.holdTimeConfig}">
+              <span ng-if="machine.session.holdTime != null" class="one-height">
                 {{ machine.session.holdTime | secondsToDateTime | date:'mm:ss'}}
               </span>
               <span ng-if="machine.session.holdTime == null">-</span>
@@ -38,22 +38,21 @@
         </div>
         <div class="list-group-item">
           <h3 class="session-title" style="float: none; margin-bottom: 0px;">
-                Total Time: 
-                <span ng-if="machine.session.sessionTime != null" class="white">
-                  {{ machine.session.sessionTime | secondsToDateTime | date:'mm:ss'}}
-                </span>
-                <span ng-if="machine.session.sessionTime == null">-</span>
-                <button class="btn btn-primary btn-sm" ng-click="resetSession();" style="float: right;">
-                  RESET
-                </button>
-            </h3>
-        </div>
-        <div class="list-group-item center">
-          <h3 class="session-title">
-              This Session
+              Total Time:
+              <span ng-if="machine.session.sessionTime != null" class="white">
+                {{ machine.session.sessionTime | secondsToDateTime | date:'mm:ss'}}
+              </span>
+              <span ng-if="machine.session.sessionTime == null">-</span>
+              <button class="btn btn-primary btn-sm" ng-click="resetSession();" style="float: right;">
+                RESET
+              </button>
           </h3>
-          
-          <span style="clear: both">&nbsp;</span>
+
+          <div id="currentChart" class="clear" style="height: 190px;">
+            Chart goes here
+          </div>
+
+
         </div>
 
         <div class="list-group-item">

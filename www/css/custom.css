@@ -1,8 +1,8 @@
 
 
 .session-number {
-    font-size: 130px; 
-    color: white; 
+    font-size: 120px;
+    color: white;
     text-align: center;
     clear: both;
     margin: 0px;
@@ -10,6 +10,7 @@
 
 .session-title {
     margin-top: 2px;
+    margin-bottom: 0px;
     float: left;
 }
 
@@ -25,8 +26,15 @@ table.calibration {
     color: white;
 }
 
+.one-height {
+  line-height: 1;
+}
+
 .red {
     color: red;
+}
+.orange {
+    color: orange;
 }
 .green {
     color: #09FE01;
@@ -46,7 +54,7 @@ table.calibration {
 }
 
 .bigger {
-    font-size: 25px; 
+    font-size: 25px;
 }
 .ui-keyboard-preview-wrapper input.bigger {
     font-size: 25px !important;

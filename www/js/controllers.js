@@ -29,7 +29,7 @@ angular.module('therapyui.controllers', [])
     };
 
     $scope.patientSelected = function() {
-        
+
     };
 
 
@@ -125,7 +125,7 @@ angular.module('therapyui.controllers', [])
         //                 template: 'Error deleting patient'
         //                 });
         //             });
-        //     } 
+        //     }
         // });
     };
 
@@ -217,7 +217,7 @@ angular.module('therapyui.controllers', [])
       };
       $scope.submitChangePassword = function() {
           if($scope.settings.submittedPassword) {
-              
+
             if($scope.validatePassword()) {
                 if($scope.settings.newPassword && $scope.settings.newPassword.length > 3) {
                     $scope.settings.passwordError = "";
@@ -228,7 +228,7 @@ angular.module('therapyui.controllers', [])
             } else {
                 $scope.settings.passwordError = "Invalid Current Password";
             }
-              
+
           } else {
               $scope.settings.passwordError = "Enter the Current Password";
           }
@@ -345,6 +345,57 @@ angular.module('therapyui.controllers', [])
           $scope.machine = response.data;
       });
   };
+
+  $scope.loadChart = function() {
+    Highcharts.chart('currentChart', {
+        chart: {
+            type: 'boxplot'
+        },
+        title: {
+            text: ''
+        },
+        legend: {
+            enabled: false
+        },
+        xAxis: {
+            categories: ['1', '2', '3', '4', '5']
+        },
+        yAxis: {
+            min: -10,
+            max: 180,
+            tickInterval: 10,
+
+            title: {
+              text: ''
+            },
+            plotLines: [{
+                value: 0,
+                color: 'orange',
+                width: 2
+            },
+            {
+                value: 90,
+                color: 'green',
+                width: 2
+            }]
+        },
+        series: [{
+            name: 'Repetitions',
+            data: [
+                [-5, -5, -5, 160, 160],
+                [0, 0, 0, 150, 150],
+                [-1, -1, -1, 140, 140],
+                [5, 5, 5, 130, 130],
+                [2, 2, 2, 170, 170],
+                [10, 10, 10, 180, 180],
+                [-10, -10, -10, 160, 160],
+                [0, 0, 0, 150, 150]
+            ]
+        }]
+    });
+  };
+
+  $scope.loadChart();
 
 })
 
