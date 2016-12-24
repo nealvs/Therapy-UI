@@ -4,7 +4,7 @@
 
       <div ng-if="settings.mode == 'all'">
         <div class="list-group-item">
-        
+
           <table class="calibration">
             <tr>
               <td>
@@ -39,7 +39,7 @@
               <td colspan="2">
                 <button class="btn btn-block btn-lg btn-primary bigger" ng-click="calibrate();">
                   <span class="glyphicon glyphicon-wrench"></span>
-                  Calibrate at 90&deg
+                  Calibrate at {{ machine.angleCalibrationDegree | number: 0 }}&deg
                 </button>
               </td>
             </tr>
@@ -67,6 +67,10 @@
             <select id="timeZone" class="input-lg form-control bigger">
               <option>Time Zone 1</option>
               <option>Time Zone 2</option>
+              <option>Time Zone 3</option>
+              <option>Time Zone 4</option>
+              <option>Time Zone 5</option>
+              <option>Time Zone 6</option>
             </select>
           </form>
         </div>
@@ -143,7 +147,6 @@
         <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitClearDatabase()">Clear Database</button>
       </div>
 
-      <br/>
       <br/>
       <br/>
       <div class="list-group-item">

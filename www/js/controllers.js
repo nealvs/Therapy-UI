@@ -288,7 +288,6 @@ angular.module('therapyui.controllers', [])
   $scope.machine.joystick = 0;
 
   //$scope.$on('$ionicView.enter', function(e) {
-      console.log("Demo start...");
       $scope.running = true;
       var timer = $interval(function() {
           if($scope.running) {
@@ -299,8 +298,21 @@ angular.module('therapyui.controllers', [])
                 $scope.machine = response.data;
             });
           }
-      }, 500);
+      }, 100);
   //});
+
+  $scope.joystickDown = function(event) {
+      console.log("joystick down");
+      Machine.joystickDown();
+  };
+  $scope.joystickStop = function(event) {
+      console.log("joystick stop");
+      Machine.joystickStop();
+  };
+  $scope.joystickUp = function(event) {
+      console.log("joystick up");
+      Machine.joystickUp();
+  };
 
 //   $scope.$on('$ionicView.leave', function(e) {
 //       console.log("Leaving current...");

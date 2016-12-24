@@ -42,6 +42,16 @@ angular.module('therapyui.machine-service', [])
         return Common.post('/updateJoystick', {'value': value});
     };
 
+    service.joystickUp = function() {
+        return Common.post('/joystickUp', {});
+    };
+    service.joystickStop = function() {
+        return Common.post('/joystickStop', {});
+    };
+    service.joystickDown = function() {
+        return Common.post('/joystickDown', {});
+    };
+
     service.reset = function(value) {
         return Common.post('/reset', {});
     };
