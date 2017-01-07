@@ -145,7 +145,7 @@ angular.module('therapyui.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
     $scope.machine = {};
-    $scope.settings = { mode: 'password', holdTimeConfig: null, password: null, submittedPassword: "", passwordError: "" };
+    $scope.settings = { mode: 'password', holdTimeConfig: null, timeZone: "America/Denver", password: null, submittedPassword: "", passwordError: "" };
     $scope.running = true;
       var timer = $interval(function() {
           if($scope.running) {
@@ -155,6 +155,7 @@ angular.module('therapyui.controllers', [])
                     if(!$scope.settings.holdTimeConfig) {
                         console.log($scope.machine.holdTimeConfig);
                         $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
+                        $scope.settings.timeZone = $scope.machine.timeZone;
                         $scope.settings.password = $scope.machine.password;
                     }
                 }
@@ -175,6 +176,15 @@ angular.module('therapyui.controllers', [])
             });
       };
 
+      $scope.applyAngleLimits = function(event) {
+          console.log("apply angle limits");
+          Machine.applyAngleLimits();
+      };
+      $scope.removeAngleLimits = function(event) {
+          console.log("remove angle limits");
+          Machine.removeAngleLimits();
+      };
+
       $scope.holdFocus = function() {
           $scope.settings.successMsg = "";
           $scope.settings.errorMsg = "";
@@ -182,9 +192,16 @@ angular.module('therapyui.controllers', [])
       $scope.setHoldTime = function() {
           console.log("Set hold time: " + $scope.settings.holdTimeConfig);
           if($scope.settings.holdTimeConfig && $scope.settings.holdTimeConfig > 0) {
-
+              Machine.setHoldTime($scope.settings.holdTimeConfig);
           } else {
               $scope.settings.errorMsg = "Hold time must be > 0";
+          }
+      };
+
+      $scope.changeTimeZone = function() {
+          console.log("Set timeZone: " + $scope.settings.timeZone);
+          if($scope.settings.timeZone) {
+              Machine.setTimeZone($scope.settings.timeZone);
           }
       };
 
