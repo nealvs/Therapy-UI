@@ -214,6 +214,7 @@ angular.module('therapyui.controllers', [])
       $scope.submitPassword = function() {
           if($scope.settings.submittedPassword) {
             if($scope.validatePassword()) {
+                $('#password').getkeyboard().close();
                 $scope.settings.passwordError = "";
                 $scope.settings.mode = "all";
                 $scope.loadAll();
@@ -301,8 +302,9 @@ angular.module('therapyui.controllers', [])
 
 .controller('CurrentSessionCtrl', function($scope, $location, $state, $interval, Machine) {
 
-  $scope.machine = {};
+  $scope.machine = { session: { repetitionList: [] } };
   $scope.machine.joystick = 0;
+  $scope.chart = null;
 
   //$scope.$on('$ionicView.enter', function(e) {
       $scope.running = true;
@@ -313,6 +315,16 @@ angular.module('therapyui.controllers', [])
                   response.data.joystickSlider = $scope.machine.joystickSlider;
                 }
                 $scope.machine = response.data;
+
+                if($scope.chart) {
+                    // Redraw current angle line
+                    $scope.chart.series[0].yAxis.removePlotLine(1);
+                    $scope.chart.series[0].yAxis.addPlotLine({id: 1, value: $scope.machine.angle, color: 'green', width: 4 });
+                    // Redraw X Axis Numbers
+                    $scope.chart.series[0].xAxis.update({categories: $scope.machine.session.repetitionNumbers}, true);
+                    // Redraw repetition boxes
+                    $scope.chart.series[0].update({data: $scope.machine.session.repetitionList});
+                }
             });
           }
       }, 100);
@@ -376,7 +388,8 @@ angular.module('therapyui.controllers', [])
   };
 
   $scope.loadChart = function() {
-    Highcharts.chart('currentChart', {
+
+    $scope.chart = Highcharts.chart('currentChart', {
         chart: {
             type: 'boxplot'
         },
@@ -386,41 +399,41 @@ angular.module('therapyui.controllers', [])
         legend: {
             enabled: false
         },
+        tooltip: {
+            enabled: false
+        },
         xAxis: {
-            categories: ['1', '2', '3', '4', '5']
+            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         },
         yAxis: {
-            min: -10,
-            max: 180,
-            tickInterval: 10,
-
+            min: -5,
+            max: 170,
+            tickInterval: 5,
+            tickPositions: [-10, 0, 20, 40, 60, 80, 100, 120, 140, 160, 180],
             title: {
               text: ''
             },
-            plotLines: [{
-                value: 0,
-                color: 'orange',
-                width: 2
-            },
+            plotLines: [
             {
-                value: 90,
+                id: 1,
+                value: $scope.machine.angle,
                 color: 'green',
-                width: 2
+                width: 4
             }]
         },
         series: [{
             name: 'Repetitions',
-            data: [
-                [-5, -5, -5, 160, 160],
-                [0, 0, 0, 150, 150],
-                [-1, -1, -1, 140, 140],
-                [5, 5, 5, 130, 130],
-                [2, 2, 2, 170, 170],
-                [10, 10, 10, 180, 180],
-                [-10, -10, -10, 160, 160],
-                [0, 0, 0, 150, 150]
-            ]
-        }]
+            data: $scope.machine.session.repetitionList
+        }],
+        plotOptions: {
+            boxplot: {
+                //fillColor: '#F0F0E0',
+                //lineWidth: 2,
+                medianWidth: 0,
+                stemWidth: 0,
+                whiskerWidth: 0
+            }
+        }
     });
   };
 
@@ -428,4 +441,56 @@ angular.module('therapyui.controllers', [])
 
 })
 
+.controller('SoftwareCtrl', function($scope, $location, $state, $interval, Machine) {
+
+  $scope.machine = {};
+  $scope.machine.joystick = 0;
+
+  $scope.running = true;
+  var timer = $interval(function() {
+      if($scope.running) {
+        Machine.getStatus().then(function(response) {
+            if($scope.machine) {
+              response.data.joystickSlider = $scope.machine.joystickSlider;
+            }
+            $scope.machine = response.data;
+        });
+      }
+  }, 100);
+
+  $scope.joystickDown = function(event) {
+      console.log("joystick down");
+      Machine.joystickDown();
+  };
+  $scope.joystickStop = function(event) {
+      console.log("joystick stop");
+      Machine.joystickStop();
+  };
+  $scope.joystickUp = function(event) {
+      console.log("joystick up");
+      Machine.joystickUp();
+  };
+
+  $scope.reset = function() {
+      Machine.reset().then(function(response) {
+          $scope.machine = response.data;
+      });
+  };
+
+  $scope.resetSession = function() {
+      Machine.resetSession().then(function(response) {
+          $scope.machine = response.data;
+      });
+  };
+
+  $scope.updateJoystick = function() {
+      Machine.updateJoystick($scope.machine.joystickSlider / 100).then(function(response) {
+          if($scope.machine) {
+             response.data.joystickSlider = $scope.machine.joystickSlider;
+          }
+          $scope.machine = response.data;
+      });
+  };
+
+})
 

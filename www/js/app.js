@@ -22,6 +22,15 @@ angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.cont
           }
         }
     })
+    .state('app.software', {
+        url: '/software',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/software.html',
+            controller: 'SoftwareCtrl'
+          }
+        }
+    })
     .state('app.settings', {
           url: '/settings',
           views: {
