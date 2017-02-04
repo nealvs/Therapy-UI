@@ -315,11 +315,15 @@ angular.module('therapyui.controllers', [])
                   response.data.joystickSlider = $scope.machine.joystickSlider;
                 }
                 $scope.machine = response.data;
+                if(!$scope.machine.session.patient && $location.path() == '/app/current') {
+                    $location.path("/app/patients");
+                }
 
                 if($scope.chart) {
                     // Redraw current angle line
                     $scope.chart.series[0].yAxis.removePlotLine(1);
-                    $scope.chart.series[0].yAxis.addPlotLine({id: 1, value: $scope.machine.angle, color: 'green', width: 4 });
+                    var angleLineColor = $scope.machine.angle < 0 ? 'blue' : 'green';
+                    $scope.chart.series[0].yAxis.addPlotLine({id: 1, value: $scope.machine.angle, color: angleLineColor, width: 4 });
                     // Redraw X Axis Numbers
                     $scope.chart.series[0].xAxis.update({categories: $scope.machine.session.repetitionNumbers}, true);
                     // Redraw repetition boxes
@@ -406,10 +410,18 @@ angular.module('therapyui.controllers', [])
             categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         },
         yAxis: {
-            min: -5,
-            max: 170,
-            tickInterval: 5,
             tickPositions: [-10, 0, 20, 40, 60, 80, 100, 120, 140, 160, 180],
+            breaks: [
+              {from: -1, to: -1, breakSize: 10},
+              {from: -2, to: -2, breakSize: 10},
+              {from: -3, to: -3, breakSize: 10},
+              {from: -4, to: -4, breakSize: 10},
+              {from: -5, to: -5, breakSize: 10},
+              {from: -6, to: -6, breakSize: 10},
+              {from: -7, to: -7, breakSize: 10},
+              {from: -8, to: -8, breakSize: 10},
+              {from: -9, to: -9, breakSize: 10}
+            ],
             title: {
               text: ''
             },
