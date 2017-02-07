@@ -59,3 +59,11 @@ table.calibration {
 .ui-keyboard-preview-wrapper input.bigger {
     font-size: 25px !important;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.right {
+  text-align: right;
+}

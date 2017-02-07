@@ -8,7 +8,7 @@
             Go Back
           </button>
         </a>
-        <button class="btn btn-primary bigger" style="float: right" ng-click="startNewSession();">
+        <button class="btn btn-success bigger" style="float: right" ng-click="startNewSession();">
           Start Session
           <span class="glyphicon glyphicon-play-circle"></span>
         </button>
@@ -31,7 +31,16 @@
           <li ng-repeat="session in patient.sessions track by $index" class="list-group-item">
             <a href="#/app/session/{{session.id}}">
               <span class="glyphicon glyphicon-chevron-right right-icon"></span>
-              <h3>{{ session.startTime }}</h3>
+              <h3>
+                {{ session.startTime }}
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <span ng-if="session.lowAngle != null && session.highAngle != null">
+                  <span class="inline-block right" style="width: 50px;">{{ session.lowAngle }}</span>
+                  <span class="inline-block right" style="width: 50px;">{{ session.highAngle }}</span>
+                </span>
+              </h3>
             </a>
           </li>
         </ul>
