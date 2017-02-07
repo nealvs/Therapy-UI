@@ -67,3 +67,10 @@ table.calibration {
 .right {
   text-align: right;
 }
+.center {
+  text-align: center;
+}
+
+.glyphicon {
+  vertical-align: middle;
+}

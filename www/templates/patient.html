@@ -13,26 +13,28 @@
           <span class="glyphicon glyphicon-play-circle"></span>
         </button>
       </div>
+      <div class="list-group-item center">
+          <span class="bigger">
+              <span class="white">{{ patient.firstName }} {{ patient.lastName }}</span>
+          </span>
+      </div>
       <div class="list-group-item bigger">
-          <span class="bigger">
-              First Name:
-              <span class="white">{{ patient.firstName }}</span>
-          </span> <br/>
-          <span class="bigger">
-              Last Name:
-              <span class="white">{{ patient.lastName }}</span>
-          </span> <br/>
+          <span>Goals:</span>
+          <span class="inline-block right" style="width: 50px;">
+            {{ patient.lowGoal }}
+          </span>
+          <span class="inline-block right" style="width: 50px;">
+            {{ patient.highGoal }}
+          </span>
+          <button class="btn btn-primary bigger">Set</button>
       </div>
       <div class="list-group-item">
-        <span class="bigger">Sessions</span>
-        <br/>
-        <br/>
         <ul class="list-group" style="max-height: 500px; overflow-y: auto">
           <li ng-repeat="session in patient.sessions track by $index" class="list-group-item">
             <a href="#/app/session/{{session.id}}">
               <span class="glyphicon glyphicon-chevron-right right-icon"></span>
               <h3>
-                {{ session.startTime }}
+                {{ session.startDate }}
                 &nbsp;
                 &nbsp;
                 &nbsp;
