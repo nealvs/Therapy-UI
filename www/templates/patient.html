@@ -1,5 +1,5 @@
 <div view-title="Patient">
-  <div>
+  <div ng-if="patientView.mode == 'normal'">
     <div class="list-group" class="clear">
       <div class="list-group-item">
         <a href="#/app/patients">
@@ -18,7 +18,7 @@
               <span class="white">{{ patient.firstName }} {{ patient.lastName }}</span>
           </span>
       </div>
-      <div class="list-group-item bigger">
+      <div class="list-group-item bigger" style="line-height: 2.0">
           <span>Goals:</span>
           <span class="inline-block right" style="width: 50px;">
             {{ patient.lowGoal }}
@@ -26,7 +26,7 @@
           <span class="inline-block right" style="width: 50px;">
             {{ patient.highGoal }}
           </span>
-          <button class="btn btn-primary bigger">Set</button>
+          <button class="btn btn-primary bigger float-right" ng-click="setGoals()">Set</button>
       </div>
       <div class="list-group-item">
         <ul class="list-group" style="max-height: 500px; overflow-y: auto">
@@ -53,5 +53,43 @@
     </div>
 
 
+  </div>
+  <div ng-if="patientView.mode == 'setGoals'">
+    <div class="list-group-item">
+      <div style="height: 40px;">
+        <div class="alert alert-danger bigger" ng-if="patientView.goalsError" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          {{ patientView.goalsError }}
+        </div>
+      </div>
+      <br/>
+      <table>
+        <tr>
+            <td style="width: 120px;">
+              <span class="bigger">Low Goal</span>
+            </td>
+            <td>
+              <input id="lowGoal" type="number" min="-10" max="170" class="num-input wider form-control input-lg bigger" ng-model="patient.lowGoal" ng-focus="lowFocus()" />
+            </td>
+        </tr>
+        <tr>
+            <td><span class="bigger">High Goal</span></td>
+            <td><input id="highGoal" type="number" min="-10" max="170" class="num-input wider form-control input-lg bigger" ng-model="patient.highGoal" ng-focus="highFocus()" /></td>
+        </tr>
+      </table>
+      <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitChangePassword()">Submit</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="list-group-item">
+      <a ng-click="cancel()">
+        <button class="btn btn-block btn-lg btn-primary bigger">
+          <span>Cancel</span>
+        </button>
+      </a>
+    </div>
   </div>
 </div>

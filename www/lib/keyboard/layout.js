@@ -17,3 +17,16 @@ jQuery.keyboard.layouts['international'] = {
 	]
 };
 
+jQuery.keyboard.layouts['num'] = {
+	'name' : 'num',
+	'lang' : ['all'],
+  'normal': [
+      ' {clear} {b}',
+      '7 8 9',
+      '4 5 6',
+      '1 2 3',
+      '0 {a} {c}'
+    ]
+  }
+};
+

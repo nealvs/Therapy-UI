@@ -74,3 +74,15 @@ table.calibration {
 .glyphicon {
   vertical-align: middle;
 }
+
+.float-right {
+  float: right;
+}
+
+.num-input {
+  display: inline-block;
+  width: 70px;
+}
+.num-input.wider {
+  width: 80px;
+}

@@ -89,6 +89,7 @@ angular.module('therapyui.controllers', [])
 
 .controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
 
+    $scope.patientView = {mode: 'normal'};
     $scope.patient = {};
     $scope.loadPatient = function() {
         Machine.loadPatient($stateParams.patientId).then(function(response) {
@@ -107,6 +108,34 @@ angular.module('therapyui.controllers', [])
             //       title: 'Error',
             //       template: 'Error starting new session'
             //    });
+          });
+    };
+
+    $scope.setGoals = function() {
+        $scope.patientView.mode = 'setGoals';
+    };
+    $scope.cancel = function() {
+          $scope.patientView.mode = 'normal';
+    };
+
+    $scope.lowFocus = function() {
+        $scope.patientView.goalsError = "";
+        $('#lowGoal')
+          .keyboard({
+            layout : 'num',
+            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+            preventPaste : true,  // prevent ctrl-v and right click
+            autoAccept : true
+          });
+    };
+    $scope.highFocus = function() {
+        $scope.patientView.goalsError = "";
+        $('#highGoal')
+          .keyboard({
+            layout : 'num',
+            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+            preventPaste : true,  // prevent ctrl-v and right click
+            autoAccept : true
           });
     };
 
@@ -145,14 +174,16 @@ angular.module('therapyui.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
     $scope.machine = {};
-    $scope.settings = { mode: 'password', holdTimeConfig: null, timeZone: "America/Denver", password: null, submittedPassword: "", passwordError: "" };
+    $scope.settings = { mode: 'password', firstLoad: true, holdTimeConfig: null, timeZone: "America/Denver", password: null, submittedPassword: "", passwordError: "" };
     $scope.running = true;
       var timer = $interval(function() {
           if($scope.running) {
             Machine.getStatus().then(function(response) {
                 if(response.data) {
                     $scope.machine = response.data;
-                    if(!$scope.settings.holdTimeConfig) {
+
+                    if($scope.settings.firstLoad) {
+                        $scope.settings.firstLoad = false;
                         console.log($scope.machine.holdTimeConfig);
                         $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
                         $scope.settings.timeZone = $scope.machine.timeZone;
@@ -188,8 +219,16 @@ angular.module('therapyui.controllers', [])
       $scope.holdFocus = function() {
           $scope.settings.successMsg = "";
           $scope.settings.errorMsg = "";
+          $('#holdTime')
+          	.keyboard({
+          		layout : 'num',
+          		restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+          		preventPaste : true,  // prevent ctrl-v and right click
+          		autoAccept : true
+          	});
       };
       $scope.setHoldTime = function() {
+          $scope.settings.holdTimeConfig = $('#holdTime').val();
           console.log("Set hold time: " + $scope.settings.holdTimeConfig);
           if($scope.settings.holdTimeConfig && $scope.settings.holdTimeConfig > 0) {
               Machine.setHoldTime($scope.settings.holdTimeConfig);
@@ -206,7 +245,7 @@ angular.module('therapyui.controllers', [])
       };
 
       $scope.validatePassword = function() {
-        var valid =  $scope.settings.submittedPassword.toLowerCase() == $scope.settings.password.toLowerCase() || $scope.settings.submittedPassword.toLowerCase() == 'kneeease';
+        var valid =  $scope.settings.submittedPassword.toLowerCase() == $scope.settings.password.toLowerCase() || $scope.settings.submittedPassword.toLowerCase() == 'genuease';
         $scope.settings.submittedPassword = "";
         return valid;
       };

@@ -41,7 +41,7 @@
                   <div class="btn-group btn-group-justified">
                     <button class="btn btn-lg btn-primary bigger" ng-click="calibrate();">
                       <span class="glyphicon glyphicon-wrench"></span>
-                      Calibrate {{ machine.angleCalibrationDegree | number: 0 }}&deg
+                      {{ machine.angleCalibrationDegree | number: 0 }}&deg
                     </button>
                   </div>
 
@@ -65,7 +65,7 @@
             <label for="holdTime">
               <h3>Hold Time (seconds):</h3>
             </label>
-            <input id="holdTime" type="text" class="num input-lg form-control bigger" ng-focus="holdFocus()" style="display: inline-block; width: 70px;" maxlength="2" ng-model="settings.holdTimeConfig" />
+            <input id="holdTime" type="number" min="10" max="120" class="num num-input input-lg form-control bigger" ng-focus="holdFocus()" ng-model="settings.holdTimeConfig" />
             <button class="btn btn-primary bigger" style="margin-top: -10px" ng-click="setHoldTime();">Set</button>
           </form>
         </div>

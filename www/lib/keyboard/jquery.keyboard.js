@@ -2451,12 +2451,10 @@ http://www.opensource.org/licenses/mit-license.php
 		},
 		'num': {
 			'normal': [
-				'= ( ) {b}',
-				'{clear} / * -',
-				'7 8 9 +',
-				'4 5 6 {sign}',
-				'1 2 3 %',
-				'0 {dec} {a} {c}'
+        '7 8 9',
+        '4 5 6',
+        '1 2 3',
+        '{clear} 0 {b}'
 			]
 		}
 	};
