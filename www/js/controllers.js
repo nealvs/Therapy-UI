@@ -112,10 +112,32 @@ angular.module('therapyui.controllers', [])
     };
 
     $scope.setGoals = function() {
+        $scope.patientView.lowGoalConfig = $scope.patient.lowGoal;
+        $scope.patientView.highGoalConfig = $scope.patient.highGoal;
         $scope.patientView.mode = 'setGoals';
     };
     $scope.cancel = function() {
           $scope.patientView.mode = 'normal';
+    };
+    $scope.submitGoals = function() {
+        $scope.patientView.lowGoalConfig = $('#lowGoal').val();
+        $scope.patientView.highGoalConfig = $('#highGoal').val();
+        console.log("Set goals: " + $scope.patientView.lowGoalConfig + " - " + $scope.patientView.highGoalConfig);
+        if($scope.patientView.lowGoalConfig && $scope.patientView.lowGoalConfig < -5 ||
+           $scope.patientView.lowGoalConfig && $scope.patientView.lowGoalConfig > 170 ||
+           $scope.patientView.highGoalConfig && $scope.patientView.highGoalConfig < -5 ||
+           $scope.patientView.highGoalConfig && $scope.patientView.highGoalConfig > 170
+        ) {
+            $scope.patientView.goalsError = "Goals must be between -5 and 170";
+        } else if($scope.patientView.lowGoal >= $scope.patientView.highGoal) {
+            $scope.patientView.goalsError = "Low Goal must be less than High Goal";
+        } else {
+           Machine.setGoals( {
+              lowGoal: $scope.patientView.lowGoalConfig,
+              highGoal: $scope.patientView.highGoalConfig,
+              patientId: $scope.patient.id
+           });
+        }
     };
 
     $scope.lowFocus = function() {

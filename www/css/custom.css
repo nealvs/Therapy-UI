@@ -86,3 +86,14 @@ table.calibration {
 .num-input.wider {
   width: 80px;
 }
+
+#holdTime_keyboard.ui-keyboard div {
+    font-size: 35px;
+}
+#lowGoal_keyboard.ui-keyboard div {
+    font-size: 35px;
+}
+#highGoal_keyboard.ui-keyboard div {
+    font-size: 35px;
+}
+

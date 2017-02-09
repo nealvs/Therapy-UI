@@ -65,19 +65,23 @@
       <br/>
       <table>
         <tr>
-            <td style="width: 120px;">
+            <td style="width: 140px;">
               <span class="bigger">Low Goal</span>
             </td>
             <td>
-              <input id="lowGoal" type="number" min="-10" max="170" class="num-input wider form-control input-lg bigger" ng-model="patient.lowGoal" ng-focus="lowFocus()" />
+              <input id="lowGoal" type="number" min="-10" max="170" class="num-input wider form-control input-lg bigger" ng-model="patientView.lowGoalConfig" ng-focus="lowFocus()" />
             </td>
         </tr>
         <tr>
+          <td>&nbsp;</td><td></td>
+        </tr>
+        <tr>
             <td><span class="bigger">High Goal</span></td>
-            <td><input id="highGoal" type="number" min="-10" max="170" class="num-input wider form-control input-lg bigger" ng-model="patient.highGoal" ng-focus="highFocus()" /></td>
+            <td><input id="highGoal" type="number" min="-10" max="170" class="num-input wider form-control input-lg bigger" ng-model="patientView.highGoalConfig" ng-focus="highFocus()" /></td>
         </tr>
       </table>
-      <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitChangePassword()">Submit</button>
+      <br/>
+      <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitGoals()">Submit</button>
     </div>
     <br/>
     <br/>

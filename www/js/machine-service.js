@@ -65,6 +65,10 @@ angular.module('therapyui.machine-service', [])
         return Common.post('/joystickDown', {});
     };
 
+    service.setGoals = function(goals) {
+          return Common.post('/patient/setGoals', goals);
+    };
+
     service.reset = function(value) {
         return Common.post('/reset', {});
     };
