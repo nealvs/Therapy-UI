@@ -8,8 +8,8 @@
             Go Back
           </button>
         </a>
-        <button class="btn btn-success bigger" style="float: right" ng-click="startNewSession();">
-          Start Session
+        <button class="btn btn-success bigger" style="float: right" ng-click="newSession();">
+          New Session
           <span class="glyphicon glyphicon-play-circle"></span>
         </button>
       </div>
@@ -18,7 +18,7 @@
               <span class="white">{{ patient.firstName }} {{ patient.lastName }}</span>
           </span>
       </div>
-      <div class="list-group-item bigger" style="line-height: 2.0">
+      <div class="list-group-item bigger" style="line-height: 2.0; text-align: right;">
           <span>Goals:</span>
           <span class="inline-block right" style="width: 50px;">
             {{ patient.lowGoal }}
@@ -26,7 +26,10 @@
           <span class="inline-block right" style="width: 50px;">
             {{ patient.highGoal }}
           </span>
-          <button class="btn btn-primary bigger float-right" ng-click="setGoals()">Set</button>
+          <span style="width: 50px; display: inline-block;"></span>
+          <button class="btn btn-primary bigger float-right" ng-click="setGoals()">
+            <span class="glyphicon glyphicon-wrench"></span>
+          </button>
       </div>
       <div class="list-group-item">
         <ul class="list-group" style="max-height: 500px; overflow-y: auto">
@@ -96,4 +99,52 @@
       </a>
     </div>
   </div>
+
+
+  <div ng-if="patientView.mode == 'timer'">
+    <div class="list-group-item">
+      <br/>
+      <br/>
+      <div class="input-group spinner bigger">
+        <table>
+          <tr>
+            <td><span class="white">Timer Minutes: &nbsp;</span></td>
+            <td>
+              <input type="number" min="5" max="60" class="form-control large-spinner" ng-model="patientView.minutes">
+            </td>
+            <td>
+              <div class="input-group-btn-vertical spinner-buttons">
+                <button class="btn btn-default" type="button" ng-click="timerUp();">
+                  <i class="fa fa-caret-up"></i>
+                </button>
+                <button class="btn btn-default" type="button" ng-click="timerDown();">
+                  <i class="fa fa-caret-down"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <br/>
+      <br/>
+
+      <button class="btn btn-block btn-lg btn-success bigger" ng-click="startNewSession();">
+        Start Session
+        <span class="glyphicon glyphicon-play-circle"></span>
+      </button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="list-group-item">
+      <a ng-click="cancel()">
+        <button class="btn btn-block btn-lg btn-primary bigger">
+          <span>Cancel</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
 </div>

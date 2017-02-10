@@ -89,7 +89,7 @@ angular.module('therapyui.controllers', [])
 
 .controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
 
-    $scope.patientView = {mode: 'normal'};
+    $scope.patientView = {mode: 'normal', minutes: 15};
     $scope.patient = {};
     $scope.loadPatient = function() {
         Machine.loadPatient($stateParams.patientId).then(function(response) {
@@ -97,18 +97,29 @@ angular.module('therapyui.controllers', [])
             $scope.patient = response.data.patient;
         });
     };
+    $scope.newSession = function() {
+      $scope.patientView.mode = 'timer';
+    };
     $scope.startNewSession = function() {
         console.log("startNewSession: " + $stateParams.patientId);
-        Machine.startSession($stateParams.patientId)
+        Machine.startSession($stateParams.patientId, $scope.patientView.minutes)
           .success(function(response) {
                 console.log("startSession: " + JSON.stringify(response));
                 $state.go("app.current");
           }).error(function(response) {
-            //    $ionicPopup.alert({
-            //       title: 'Error',
-            //       template: 'Error starting new session'
-            //    });
+              console.log(response);
           });
+    };
+
+    $scope.timerUp = function() {
+      if($scope.patientView.minutes < 60) {
+        $scope.patientView.minutes += 5;
+      }
+    };
+    $scope.timerDown = function() {
+      if($scope.patientView.minutes > 5) {
+        $scope.patientView.minutes -= 5;
+      }
     };
 
     $scope.setGoals = function() {
@@ -132,34 +143,48 @@ angular.module('therapyui.controllers', [])
         } else if($scope.patientView.lowGoal >= $scope.patientView.highGoal) {
             $scope.patientView.goalsError = "Low Goal must be less than High Goal";
         } else {
-           Machine.setGoals( {
+           Machine.setGoals({
               lowGoal: $scope.patientView.lowGoalConfig,
               highGoal: $scope.patientView.highGoalConfig,
               patientId: $scope.patient.id
+           }).success(function(response) {
+               $scope.patient = response;
+               $scope.patientView.mode = 'normal';
+           }).error(function(response) {
+               $scope.patientView.goalsError = response.error;
            });
         }
     };
 
     $scope.lowFocus = function() {
         $scope.patientView.goalsError = "";
-        $('#lowGoal')
-          .keyboard({
-            layout : 'num',
-            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
-            preventPaste : true,  // prevent ctrl-v and right click
-            autoAccept : true
-          });
+        $scope.lowKeyboard();
     };
     $scope.highFocus = function() {
         $scope.patientView.goalsError = "";
-        $('#highGoal')
-          .keyboard({
-            layout : 'num',
-            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
-            preventPaste : true,  // prevent ctrl-v and right click
-            autoAccept : true
-          });
+        $scope.highKeyboard();
     };
+
+    $scope.lowKeyboard = function() {
+      $('#lowGoal')
+        .keyboard({
+          layout : 'num',
+          restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+          preventPaste : true,  // prevent ctrl-v and right click
+          autoAccept : true
+        });
+    };
+    $scope.highKeyboard = function() {
+      $('#highGoal')
+        .keyboard({
+          layout : 'num',
+          restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+          preventPaste : true,  // prevent ctrl-v and right click
+          autoAccept : true
+        });
+    }
+    $scope.lowKeyboard();
+    $scope.highKeyboard();
 
     $scope.deletePatient = function(patient) {
         var confirmPopup = confirm('Are you sure you want to delete this patient?');
@@ -241,14 +266,20 @@ angular.module('therapyui.controllers', [])
       $scope.holdFocus = function() {
           $scope.settings.successMsg = "";
           $scope.settings.errorMsg = "";
-          $('#holdTime')
-          	.keyboard({
-          		layout : 'num',
-          		restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
-          		preventPaste : true,  // prevent ctrl-v and right click
-          		autoAccept : true
-          	});
+          $scope.holdKeyboard();
       };
+
+      $scope.holdKeyboard = function() {
+        $('#holdTime')
+          .keyboard({
+            layout : 'num',
+            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+            preventPaste : true,  // prevent ctrl-v and right click
+            autoAccept : true
+          });
+      };
+      $scope.holdKeyboard();
+
       $scope.setHoldTime = function() {
           $scope.settings.holdTimeConfig = $('#holdTime').val();
           console.log("Set hold time: " + $scope.settings.holdTimeConfig);
@@ -366,6 +397,7 @@ angular.module('therapyui.controllers', [])
   $scope.machine = { session: { repetitionList: [] } };
   $scope.machine.joystick = 0;
   $scope.chart = null;
+  $scope.goalsLoaded = false;
 
   //$scope.$on('$ionicView.enter', function(e) {
       $scope.running = true;
@@ -389,6 +421,16 @@ angular.module('therapyui.controllers', [])
                     $scope.chart.series[0].xAxis.update({categories: $scope.machine.session.repetitionNumbers}, true);
                     // Redraw repetition boxes
                     $scope.chart.series[0].update({data: $scope.machine.session.repetitionList});
+
+                    if(!$scope.goalsLoaded) {
+                      $scope.goalsLoaded = true;
+                      if($scope.machine.session.patient.lowGoal != null) {
+                        $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.machine.session.patient.lowGoal, color: 'yellow', width: 1 });
+                      }
+                      if($scope.machine.session.patient.highGoal != null) {
+                        $scope.chart.series[0].yAxis.addPlotLine({id: 3, value: $scope.machine.session.patient.highGoal, color: 'yellow', width: 1 });
+                      }
+                    }
                 }
             });
           }
