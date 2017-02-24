@@ -66,7 +66,7 @@ angular.module('therapyui.controllers', [])
         if($scope.newPatient.firstName && $scope.newPatient.lastName) {
             Machine.createPatient($scope.newPatient)
             .success(function(response) {
-                console.log(JSON.stringify(response));
+                //console.log(JSON.stringify(response));
                 $scope.showNewPatientForm = false;
                 $scope.loadPatients($scope.loadAll);
                 $location.path("/app/patient/" + response.id);
@@ -93,7 +93,7 @@ angular.module('therapyui.controllers', [])
     $scope.patient = {};
     $scope.loadPatient = function() {
         Machine.loadPatient($stateParams.patientId).then(function(response) {
-            console.log(JSON.stringify(response.data));
+            //console.log(JSON.stringify(response.data));
             $scope.patient = response.data.patient;
         });
     };
@@ -104,7 +104,7 @@ angular.module('therapyui.controllers', [])
         console.log("startNewSession: " + $stateParams.patientId);
         Machine.startSession($stateParams.patientId, $scope.patientView.minutes)
           .success(function(response) {
-                console.log("startSession: " + JSON.stringify(response));
+                //console.log("startSession: " + JSON.stringify(response));
                 $state.go("app.current");
           }).error(function(response) {
               console.log(response);
@@ -212,7 +212,7 @@ angular.module('therapyui.controllers', [])
     $scope.session = {};
     $scope.loadSession = function() {
         Machine.loadSession($stateParams.sessionId).then(function(response) {
-            console.log(JSON.stringify(response.data));
+            //console.log(JSON.stringify(response.data));
             $scope.session = response.data.session;
         });
     };
@@ -459,7 +459,7 @@ angular.module('therapyui.controllers', [])
       console.log("stop session");
       Machine.stopSession()
       .success(function(response) {
-            console.log("stopSession: " + JSON.stringify(response));
+            //console.log("stopSession: " + JSON.stringify(response));
             if($scope.machine && $scope.machine.session && $scope.machine.session.patient && $scope.machine.session.patient.id) {
                 $state.go("app.patient", {'patientId' : $scope.machine.session.patient.id });
             } else {
