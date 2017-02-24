@@ -103,6 +103,9 @@ a:hover, a:focus {
 #highGoal,#lowGoal,#holdTime {
   padding: 0px;
 }
+#holdTime {
+  padding-left: 10px;
+}
 
 input.large-spinner {
   height: 105px;
