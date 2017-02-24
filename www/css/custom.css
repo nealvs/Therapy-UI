@@ -96,6 +96,9 @@ table.calibration {
 #highGoal_keyboard.ui-keyboard div {
     font-size: 35px;
 }
+#highGoal,#lowGoal,#holdTime {
+  padding: 0px;
+}
 
 input.large-spinner {
   height: 105px;
