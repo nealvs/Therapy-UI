@@ -102,9 +102,10 @@ table.calibration {
 
 input.large-spinner {
   height: 105px;
-  width: 110px !important;
+  width: 140px !important;
   text-align: center;
   font-size: 65px;
+  padding: 0px;
 }
 .input-group-btn-vertical {
   position: relative;
