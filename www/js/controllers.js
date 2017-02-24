@@ -1,8 +1,13 @@
 angular.module('therapyui.controllers', [])
 
-.controller('AppCtrl', function($scope, $timeout) {
+.controller('AppCtrl', function($scope, $rootScope, $location, $timeout) {
 
-
+    $scope.showTop = function() {
+       if($location.path() == '/app/current') {
+          return false;
+       }
+       return true;
+    };
 })
 
 .controller('PatientsCtrl', function($scope, Machine, $location) {
@@ -89,7 +94,7 @@ angular.module('therapyui.controllers', [])
 
 .controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
 
-    $scope.patientView = {mode: 'normal', minutes: 15};
+    $scope.patientView = {mode: 'normal', minutes: 15, useTimer: true};
     $scope.patient = {};
     $scope.loadPatient = function() {
         Machine.loadPatient($stateParams.patientId).then(function(response) {
@@ -102,13 +107,22 @@ angular.module('therapyui.controllers', [])
     };
     $scope.startNewSession = function() {
         console.log("startNewSession: " + $stateParams.patientId);
-        Machine.startSession($stateParams.patientId, $scope.patientView.minutes)
+        var minutes = $scope.patientView.minutes;
+        if(!$scope.patientView.useTimer) {
+            minutes = -1;
+        }
+        Machine.startSession($stateParams.patientId, minutes)
           .success(function(response) {
                 //console.log("startSession: " + JSON.stringify(response));
                 $state.go("app.current");
           }).error(function(response) {
               console.log(response);
           });
+    };
+
+    $scope.useTimer = function() {
+        $scope.patientView.useTimer = $("#useTimer").is(":checked");
+        console.log("Use Timer: " + $scope.patientView.useTimer);
     };
 
     $scope.timerUp = function() {

@@ -110,7 +110,9 @@
           <tr>
             <td><span class="white">Timer Minutes: &nbsp;</span></td>
             <td>
-              <input type="number" min="5" max="60" class="form-control large-spinner" ng-model="patientView.minutes">
+              <input id="timerMinutes" tabIndex="-1" type="number" min="5" max="60"
+                     class="form-control large-spinner"
+                     ng-model="patientView.minutes" ng-disabled="!patientView.useTimer">
             </td>
             <td>
               <div class="input-group-btn-vertical spinner-buttons">
@@ -126,6 +128,14 @@
         </table>
       </div>
       <br/>
+      <div class="form-check form-check-inline">
+        <center>
+          <label class="form-check-label bigger">
+            <input id="useTimer" type="checkbox" ng-click="useTimer()" checked="checked" class="form-control left">
+            <span>Use Timer</span>
+          </label>
+        </center>
+      </div>
       <br/>
 
       <button class="btn btn-block btn-lg btn-success bigger" ng-click="startNewSession();">
