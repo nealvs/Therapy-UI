@@ -79,6 +79,10 @@ table.calibration {
   float: right;
 }
 
+a:hover, a:focus {
+  text-decoration: none;
+}
+
 .num-input {
   display: inline-block;
   width: 70px;
