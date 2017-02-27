@@ -19,13 +19,19 @@ angular.module('therapyui.controllers', [])
 
     $scope.loadPatients = function(all) {
         $scope.loadAll = all;
-        Machine.loadPatients(all).then(function(response) {
-            $scope.patients.list = response.data.patients;
-            console.log("Patients: " + $scope.patients.list.length);
-            try {
-              $scope.$digest();
-            } catch(ex) {}
-        });
+        console.log("Loading patients...");
+        Machine.loadPatients(all)
+          .success(function(response) {
+              $scope.patients.list = response.patients;
+              console.log("Patients: " + $scope.patients.list.length);
+              try {
+                $scope.$digest();
+              } catch(ex) {}
+          })
+          .error(function(response) {
+              console.log("Error getting patients. Trying again.");
+              setTimeout($scope.loadPatients, 0);
+          });
     };
 
     $scope.clearSearch = function() {
@@ -36,7 +42,6 @@ angular.module('therapyui.controllers', [])
     $scope.patientSelected = function() {
 
     };
-
 
     $scope.showPatient = function(patient) {
         if($scope.form.search && patient) {
@@ -436,12 +441,12 @@ angular.module('therapyui.controllers', [])
                     // Redraw repetition boxes
                     $scope.chart.series[0].update({data: $scope.machine.session.repetitionList});
 
-                    if(!$scope.goalsLoaded) {
+                    if(!$scope.goalsLoaded && $scope.machine.session.patient) {
                       $scope.goalsLoaded = true;
-                      if($scope.machine.session.patient.lowGoal != null) {
+                      console.log("lowGoal: " + $scope.machine.session.patient.lowGoal);
+                      console.log("highGoal: " + $scope.machine.session.patient.highGoal);
+                      if($scope.machine.session.patient.lowGoal != null && $scope.machine.session.patient.highGoal != null) {
                         $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.machine.session.patient.lowGoal, color: 'yellow', width: 1 });
-                      }
-                      if($scope.machine.session.patient.highGoal != null) {
                         $scope.chart.series[0].yAxis.addPlotLine({id: 3, value: $scope.machine.session.patient.highGoal, color: 'yellow', width: 1 });
                       }
                     }
@@ -527,6 +532,7 @@ angular.module('therapyui.controllers', [])
             categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         },
         yAxis: {
+            gridZIndex: -5,
             tickPositions: [-10, 0, 20, 40, 60, 80, 100, 120, 140, 160, 180],
             breaks: [
               {from: -1, to: -1, breakSize: 10},

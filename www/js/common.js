@@ -10,7 +10,8 @@ angular.module('therapyui.common', [])
         }
         $q = $http({
             method: 'GET',
-            url: service.baseUrl + path
+            url: service.baseUrl + path,
+            timeout: 5000 // 5 second timeout on all get requests
         });
         return $q;
     };
