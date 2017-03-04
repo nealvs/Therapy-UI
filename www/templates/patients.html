@@ -1,7 +1,7 @@
 <div>
   <br/>
-  <div class="bar-subheader" style="height: 60px; border-bottom: 0px; top: 37px;">
-    <button style="height: 50px;" class="btn btn-block btn-primary bigger" ng-if="!showNewPatientForm" ng-click="addPatient()">
+  <div class="bar-subheader" style="height: 60px; border-bottom: 0px; top: 37px;" ng-if="!showNewPatientForm">
+    <button style="height: 50px;" class="btn btn-block btn-primary bigger" ng-click="addPatient()">
       New Patient
       </button>
   </div>
@@ -26,10 +26,16 @@
           <br/>
           <br/>
           <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
         <div class="row">
           <div class="col-md-6">
             <button class="btn btn-block btn-lg btn-primary bigger" ng-click="createPatient()">
-               Add Patient
+               Save
             </button>
           </div>
           <br/>
@@ -66,11 +72,11 @@
       </ul>
       <div class="btn-group" data-toggle="buttons" style="width: 100%">
         <label class="btn btn-primary active" style="width: 50%" ng-click="loadPatients(false);">
-          <input type="radio" name="recentButton" id="recentButton" autocomplete="off" ng-checked="!loadAll"> 
+          <input type="radio" name="recentButton" id="recentButton" autocomplete="off" ng-checked="!loadAll">
           <span class="bigger">Recent Patients</span>
         </label>
         <label class="btn btn-primary" style="width: 50%" ng-click="loadPatients(true);">
-          <input type="radio" name="allButton" id="allButton" autocomplete="off" ng-checked="!loadAll"> 
+          <input type="radio" name="allButton" id="allButton" autocomplete="off" ng-checked="!loadAll">
           <span class="bigger">All Patients</span>
         </label>
       </div>
