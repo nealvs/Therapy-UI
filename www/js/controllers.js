@@ -238,27 +238,38 @@ angular.module('therapyui.controllers', [])
     $scope.loadSession();
 })
 
-.controller('SettingsCtrl', function($scope, $stateParams, $interval, Machine) {
-    $scope.machine = {};
-    $scope.settings = { mode: 'password', firstLoad: true, holdTimeConfig: null, timeZone: "America/Denver", password: null, submittedPassword: "", passwordError: "" };
-    $scope.running = true;
-      var timer = $interval(function() {
-          if($scope.running) {
-            Machine.getStatus().then(function(response) {
-                if(response.data) {
-                    $scope.machine = response.data;
+.controller('SettingsCtrl', function($scope, $stateParams, $timeout, Machine) {
+      $scope.machine = {};
+      $scope.settings = { mode: 'password', firstLoad: true, holdTimeConfig: null, timeZone: "America/Denver", password: null, submittedPassword: "", passwordError: "" };
 
-                    if($scope.settings.firstLoad) {
-                        $scope.settings.firstLoad = false;
-                        console.log($scope.machine.holdTimeConfig);
-                        $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
-                        $scope.settings.timeZone = $scope.machine.timeZone;
-                        $scope.settings.password = $scope.machine.password;
-                    }
+      console.log("settings running=true");
+      $scope.running = true;
+      $scope.getMachineStatus = function() {
+        Machine.getStatus().then(function(response) {
+            if(response.data) {
+                $scope.machine = response.data;
+
+                if($scope.settings.firstLoad) {
+                    $scope.settings.firstLoad = false;
+                    $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
+                    $scope.settings.timeZone = $scope.machine.timeZone;
+                    $scope.settings.password = $scope.machine.password;
                 }
-            });
-          }
-      }, 100);
+            }
+            if($scope.running) {
+              $timeout($scope.getMachineStatus, 50);
+            }
+        });
+      };
+      $scope.getMachineStatus();
+
+      $scope.$on('$viewContentLoaded', function readyToTrick() {
+          console.log("SettingsCtrl ViewContentLoaded");
+      });
+      $scope.$on('$destroy', function destroy() {
+          console.log("SettingsCtrl Destroy");
+          $scope.running = false;
+      });
 
       $scope.calibrate = function() {
           console.log("calibrate");
@@ -383,6 +394,8 @@ angular.module('therapyui.controllers', [])
           if($scope.settings.mode == 'changePassword' || $scope.settings.mode == 'clearDatabase') {
             $scope.settings.mode = "all";
           } else {
+            console.log("settings running=false");
+            $scope.running = false;
             window.history.back();
           }
       };
@@ -411,50 +424,61 @@ angular.module('therapyui.controllers', [])
     //   });
 })
 
-.controller('CurrentSessionCtrl', function($scope, $location, $state, $interval, Machine) {
+.controller('CurrentSessionCtrl', function($scope, $location, $state, $timeout, Machine) {
 
   $scope.machine = { session: { repetitionList: [] } };
   $scope.machine.joystick = 0;
   $scope.chart = null;
   $scope.goalsLoaded = false;
+  console.log("CurrentSessionCtrl running=true");
 
-  //$scope.$on('$ionicView.enter', function(e) {
-      $scope.running = true;
-      var timer = $interval(function() {
-          if($scope.running) {
-            Machine.getStatus().then(function(response) {
-                if($scope.machine) {
-                  response.data.joystickSlider = $scope.machine.joystickSlider;
-                }
-                $scope.machine = response.data;
-                if(!$scope.machine.session.patient && $location.path() == '/app/current') {
-                    $location.path("/app/patients");
-                }
+  $scope.running = true;
 
-                if($scope.chart) {
-                    // Redraw current angle line
-                    $scope.chart.series[0].yAxis.removePlotLine(1);
-                    var angleLineColor = $scope.machine.angle < 0 ? 'blue' : 'green';
-                    $scope.chart.series[0].yAxis.addPlotLine({id: 1, value: $scope.machine.angle, color: angleLineColor, width: 4 });
-                    // Redraw X Axis Numbers
-                    $scope.chart.series[0].xAxis.update({categories: $scope.machine.session.repetitionNumbers}, true);
-                    // Redraw repetition boxes
-                    $scope.chart.series[0].update({data: $scope.machine.session.repetitionList});
+  $scope.getMachineStatus = function() {
+    Machine.getStatus().then(function(response) {
+        if($scope.machine) {
+          response.data.joystickSlider = $scope.machine.joystickSlider;
+        }
+        $scope.machine = response.data;
+        if(!$scope.machine.session.patient && $location.path() == '/app/current') {
+            $location.path("/app/patients");
+        }
 
-                    if(!$scope.goalsLoaded && $scope.machine.session.patient) {
-                      $scope.goalsLoaded = true;
-                      console.log("lowGoal: " + $scope.machine.session.patient.lowGoal);
-                      console.log("highGoal: " + $scope.machine.session.patient.highGoal);
-                      if($scope.machine.session.patient.lowGoal != null && $scope.machine.session.patient.highGoal != null) {
-                        $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.machine.session.patient.lowGoal, color: 'yellow', width: 1 });
-                        $scope.chart.series[0].yAxis.addPlotLine({id: 3, value: $scope.machine.session.patient.highGoal, color: 'yellow', width: 1 });
-                      }
-                    }
-                }
-            });
-          }
-      }, 100);
-  //});
+        if($scope.chart) {
+            // Redraw current angle line
+            $scope.chart.series[0].yAxis.removePlotLine(1);
+            var angleLineColor = $scope.machine.angle < 0 ? 'blue' : 'green';
+            $scope.chart.series[0].yAxis.addPlotLine({id: 1, value: $scope.machine.angle, color: angleLineColor, width: 4 });
+            // Redraw X Axis Numbers
+            $scope.chart.series[0].xAxis.update({categories: $scope.machine.session.repetitionNumbers}, true);
+            // Redraw repetition boxes
+            $scope.chart.series[0].update({data: $scope.machine.session.repetitionList});
+
+            if(!$scope.goalsLoaded && $scope.machine.session.patient) {
+              $scope.goalsLoaded = true;
+              console.log("lowGoal: " + $scope.machine.session.patient.lowGoal);
+              console.log("highGoal: " + $scope.machine.session.patient.highGoal);
+              if($scope.machine.session.patient.lowGoal != null && $scope.machine.session.patient.highGoal != null) {
+                $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.machine.session.patient.lowGoal, color: 'yellow', width: 1 });
+                $scope.chart.series[0].yAxis.addPlotLine({id: 3, value: $scope.machine.session.patient.highGoal, color: 'yellow', width: 1 });
+              }
+            }
+        }
+
+        if($scope.running) {
+            $timeout($scope.getMachineStatus, 50);
+        }
+    });
+  }
+  $scope.getMachineStatus();
+
+  $scope.$on('$viewContentLoaded', function readyToTrick() {
+      console.log("CurrentSessionCtrl ViewContentLoaded");
+  });
+  $scope.$on('$destroy', function destroy() {
+      console.log("CurrentSessionCtrl Destroy");
+      $scope.running = false;
+  });
 
   $scope.joystickDown = function(event) {
       console.log("joystick down");
@@ -476,6 +500,7 @@ angular.module('therapyui.controllers', [])
 
   $scope.stopSession = function() {
       console.log("stop session");
+      $scope.running = false;
       Machine.stopSession()
       .success(function(response) {
             //console.log("stopSession: " + JSON.stringify(response));
