@@ -160,11 +160,11 @@ angular.module('therapyui.controllers', [])
         $scope.patientView.highGoalConfig = $('#highGoal').val();
         console.log("Set goals: " + $scope.patientView.lowGoalConfig + " - " + $scope.patientView.highGoalConfig);
         if($scope.patientView.lowGoalConfig && $scope.patientView.lowGoalConfig < -5 ||
-           $scope.patientView.lowGoalConfig && $scope.patientView.lowGoalConfig > 170 ||
+           $scope.patientView.lowGoalConfig && $scope.patientView.lowGoalConfig > 140 ||
            $scope.patientView.highGoalConfig && $scope.patientView.highGoalConfig < -5 ||
-           $scope.patientView.highGoalConfig && $scope.patientView.highGoalConfig > 170
+           $scope.patientView.highGoalConfig && $scope.patientView.highGoalConfig > 140
         ) {
-            $scope.patientView.goalsError = "Goals must be between -5 and 170";
+            $scope.patientView.goalsError = "Goals must be between -5 and 140";
         } else if($scope.patientView.lowGoal >= $scope.patientView.highGoal) {
             $scope.patientView.goalsError = "Low Goal must be less than High Goal";
         } else {
@@ -564,7 +564,7 @@ angular.module('therapyui.controllers', [])
         },
         yAxis: {
             gridZIndex: -5,
-            tickPositions: [-10, 0, 20, 40, 60, 80, 100, 120, 140, 160, 180],
+            tickPositions: [-10, 0, 20, 40, 60, 80, 100, 120, 140],
             breaks: [
               {from: -1, to: -1, breakSize: 10},
               {from: -2, to: -2, breakSize: 10},
