@@ -48,6 +48,9 @@ table.calibration {
     font-size: 25px;
     line-height: 2;
 }
+.icon-small-line {
+    line-height: 1.5;
+}
 
 .clear {
     clear: both;

@@ -17,6 +17,9 @@
           <span class="bigger">
               <span class="white">{{ patient.firstName }} {{ patient.lastName }}</span>
           </span>
+          <a ng-click="deletePatient()">
+              <div class="glyphicon glyphicon-trash right-icon icon-small-line"></div>
+          </a>
       </div>
       <div class="list-group-item bigger" style="line-height: 2.0; text-align: right;">
           <span>Goals:</span>
@@ -142,6 +145,33 @@
         Start Session
         <span class="glyphicon glyphicon-play-circle"></span>
       </button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="list-group-item">
+      <a ng-click="cancel()">
+        <button class="btn btn-block btn-lg btn-primary bigger">
+          <span>Cancel</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div ng-if="patientView.mode == 'confirmDelete'">
+    <div class="list-group-item">
+      <div style="height: 40px;">
+        <div class="alert alert-danger bigger" ng-if="patientView.goalsError" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          {{ patientView.confirmError }}
+        </div>
+      </div>
+      <br/>
+      <h2 class="white">Are you sure you want to delete this patient?</h2>
+      <br/>
+      <button class="btn btn-block btn-lg btn-primary bigger" ng-click="deleteConfirm()">Yes</button>
     </div>
     <br/>
     <br/>

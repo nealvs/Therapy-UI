@@ -63,41 +63,47 @@ angular.module('therapyui.controllers', [])
     $scope.addPatient = function() {
         $scope.newPatient.firstName = "";
         $scope.newPatient.lastName = "";
+        $scope.newPatient.error = "";
         $scope.showNewPatientForm = true;
     };
 
     $scope.cancel = function() {
         $scope.newPatient.firstName = "";
         $scope.newPatient.lastName = "";
+        $scope.newPatient.error = "";
         $scope.showNewPatientForm = false;
     };
+
+    $scope.onChange = function() {
+        $scope.newPatient.error = "";
+    }
 
     $scope.createPatient = function() {
         if($scope.newPatient.firstName && $scope.newPatient.lastName) {
             Machine.createPatient($scope.newPatient)
             .success(function(response) {
-                //console.log(JSON.stringify(response));
-                $scope.showNewPatientForm = false;
-                $scope.loadPatients($scope.loadAll);
-                $location.path("/app/patient/" + response.id);
+                console.log(JSON.stringify(response));
+                if(response.error) {
+                  $scope.newPatient.error = response.error;
+                } else {
+                  //console.log(JSON.stringify(response));
+                  $scope.showNewPatientForm = false;
+                  $scope.loadPatients($scope.loadAll);
+                  $location.path("/app/patient/" + response.id);
+                }
             }).error(function(response) {
-                // $ionicPopup.alert({
-                //    title: 'Error',
-                //    template: 'Error adding patient'
-                // });
+                console.log("Error: " + response);
+                $scope.newPatient.error = response.error;
             });
         } else {
-            // $ionicPopup.alert({
-            //    title: 'Missing Data',
-            //    template: 'Please provide a First Name and Last Name'
-            // });
+            $scope.newPatient.error = 'Please provide a First Name and Last Name';
         }
     };
 
     $scope.loadPatients(false);
 })
 
-.controller('PatientCtrl', function($scope, $state, $stateParams, Machine) {
+.controller('PatientCtrl', function($scope, $state, $stateParams, $location, Machine) {
 
     $scope.patientView = {mode: 'normal', minutes: 15, useTimer: true};
     $scope.patient = {};
@@ -205,24 +211,24 @@ angular.module('therapyui.controllers', [])
     $scope.lowKeyboard();
     $scope.highKeyboard();
 
-    $scope.deletePatient = function(patient) {
-        var confirmPopup = confirm('Are you sure you want to delete this patient?');
 
-        // confirmPopup.then(function(res) {
-        //     if(res) {
-        //         Machine.deletePatient(patient.id)
-        //             .success(function(response) {
-        //                 console.log(JSON.stringify(response));
-        //                 $scope.loadPatients();
-        //             }).error(function(response) {
-        //                 $ionicPopup.alert({
-        //                 title: 'Error',
-        //                 template: 'Error deleting patient'
-        //                 });
-        //             });
-        //     }
-        // });
+    $scope.deletePatient = function() {
+        $scope.patientView.mode = 'confirmDelete';
     };
+    $scope.cancelConfirm = function() {
+        $scope.patientView.mode = 'normal';
+    };
+    $scope.deleteConfirm = function() {
+        $scope.patientView.confirmError = '';
+        Machine.deletePatient($scope.patient.id)
+           .success(function(response) {
+               console.log(JSON.stringify(response));
+               $location.path("/app/patients");
+           }).error(function(response) {
+               $scope.patientView.confirmError = 'Error deleting patient';
+           });
+    }
+
 
     $scope.loadPatient();
 })

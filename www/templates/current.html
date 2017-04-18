@@ -39,7 +39,7 @@
         <div class="list-group-item">
           <h3 class="session-title" style="float: none; margin-bottom: 0px;">
               Total Time:
-              <span ng-if="machine.session.sessionTime != null" class="white">
+              <span ng-if="machine.session.sessionTime != null" ng-class="{'white' : $machine.session.timerAlarmTriggeredCount == 0, 'text-danger': $machine.session.timerAlarmTriggeredCount > 0}">
                 {{ machine.session.sessionTime | secondsToDateTime | date:'mm:ss'}}
               </span>
               <span ng-if="machine.session.sessionTime == null">-</span>
