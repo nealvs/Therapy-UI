@@ -111,6 +111,7 @@ angular.module('therapyui.controllers', [])
         Machine.loadPatient($stateParams.patientId).then(function(response) {
             //console.log(JSON.stringify(response.data));
             $scope.patient = response.data.patient;
+            $scope.loadChart();
         });
     };
     $scope.newSession = function() {
@@ -229,8 +230,63 @@ angular.module('therapyui.controllers', [])
            });
     }
 
-
     $scope.loadPatient();
+
+    $scope.loadChart = function() {
+        $scope.chart = Highcharts.chart('sessionsChart', {
+            chart: {
+                type: 'boxplot'
+            },
+            title: {
+                text: ''
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                enabled: false
+            },
+            xAxis: {
+                categories: $scope.patient.repetitionNumbers
+            },
+            yAxis: {
+                gridZIndex: -5,
+                tickPositions: [-10, 0, 20, 40, 60, 80, 100, 120, 140],
+                breaks: [
+                  {from: -1, to: -1, breakSize: 10},
+                  {from: -2, to: -2, breakSize: 10},
+                  {from: -3, to: -3, breakSize: 10},
+                  {from: -4, to: -4, breakSize: 10},
+                  {from: -5, to: -5, breakSize: 10},
+                  {from: -6, to: -6, breakSize: 10},
+                  {from: -7, to: -7, breakSize: 10},
+                  {from: -8, to: -8, breakSize: 10},
+                  {from: -9, to: -9, breakSize: 10}
+                ],
+                title: {
+                  text: ''
+                },
+                plotLines: []
+            },
+            series: [{
+                name: 'Sessions',
+                data: $scope.patient.repetitionList
+            }],
+            plotOptions: {
+                boxplot: {
+                    //fillColor: '#F0F0E0',
+                    //lineWidth: 2,
+                    medianWidth: 0,
+                    stemWidth: 0,
+                    whiskerWidth: 0
+                }
+            }
+        });
+        // Move to plotLines: [] initialization
+        $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.patient.lowGoal, color: 'yellow', width: 1 });
+        $scope.chart.series[0].yAxis.addPlotLine({id: 3, value: $scope.patient.highGoal, color: 'yellow', width: 1 });
+      };
+
 })
 
 .controller('SessionCtrl', function($scope, $stateParams, Machine) {

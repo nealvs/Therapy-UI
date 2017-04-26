@@ -35,7 +35,13 @@
           </button>
       </div>
       <div class="list-group-item">
-        <ul class="list-group" style="max-height: 470px; overflow-y: auto">
+        <div ng-if="!patient.sessions || patient.sessions.length == 0">
+            <center><span>No Sessions</span></center>
+        </div>
+        <div id="sessionsChart" ng-if="patient.sessions || patient.sessions.length > 0" class="clear" style="height: 225px;">
+
+        </div>
+        <ul class="list-group" style="max-height: 250px; overflow-y: auto">
           <li ng-repeat="session in patient.sessions track by $index" class="list-group-item">
             <a href="#/app/session/{{session.id}}">
               <span class="glyphicon glyphicon-chevron-right right-icon"></span>
@@ -52,9 +58,6 @@
             </a>
           </li>
         </ul>
-        <div id="sessionsChart" ng-if="!patient.sessions || patient.sessions.length == 0">
-            <center><span>No Sessions</span></center>
-        </div>
       </div>
     </div>
 
