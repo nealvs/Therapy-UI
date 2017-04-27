@@ -1,5 +1,5 @@
 <div view-title="Session">
-  <div>
+  <div ng-if="sessionView.mode == 'normal'">
     <div class="list-group" class="clear">
       <div class="list-group-item">
         <a href="#/app/patient/{{session.patientId}}">
@@ -10,23 +10,59 @@
          <span class="bigger">{{ session.patient.firstName }} {{ session.patient.lastName }}</span>
       </div>
       <div class="list-group-item">
-          <span class="bigger">Start Time: {{ session.startDateTime }}</span> <br/>
+          <a ng-click="deleteSession()">
+            <div class="glyphicon glyphicon-trash right-icon icon-small-line"></div>
+          </a>
+          <span class="bigger">{{ session.startDateTime }}</span> <br/>
           <span class="bigger">Total Time: {{ session.totalSeconds | secondsToDateTime | date:'mm:ss' }}</span> <br/>
       </div>
       <div class="list-group-item">
         <span class="bigger">Repetitions: {{ session.repetitions }}</span>
       </div>
       <div class="list-group-item bigger">
-          <span>Max Extension:</span>
-          <span>{{ session.lowAngle }}&deg;</span>
-          <span>({{ session.lowHoldSeconds}} s)</span>
-          <br/>
-          <span>Max Flexion:</span>
-          <span>{{ session.highAngle }}&deg;</span>
-          <span>({{ session.highHoldSeconds}} s)</span>
-          <br/>
+        <table>
+          <tr>
+            <td>Max Extension: </td>
+            <td> &nbsp; {{ session.lowAngle }}&deg; </td>
+            <td> &nbsp; ({{ session.lowHoldSeconds}}s) </td>
+          </tr>
+          <tr>
+            <td>Max Flexion: </td>
+            <td> &nbsp; {{ session.highAngle }}&deg; </td>
+            <td> &nbsp; ({{ session.highHoldSeconds}}s) </td>
+          </tr>
+        </table>
       </div>
     </div>
 
   </div>
+
+
+  <div ng-if="sessionView.mode == 'confirmDelete'">
+    <div class="list-group-item">
+      <div style="height: 40px;">
+        <div class="alert alert-danger bigger" ng-if="sessionView.confirmError" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          {{ sessionView.confirmError }}
+        </div>
+      </div>
+      <br/>
+      <h2 class="white">Are you sure you want to delete this session?</h2>
+      <br/>
+      <button class="btn btn-block btn-lg btn-primary bigger" ng-click="deleteConfirm()">Yes</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="list-group-item">
+      <a ng-click="cancelConfirm()">
+        <button class="btn btn-block btn-lg btn-primary bigger">
+          <span>Cancel</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
 </div>

@@ -111,7 +111,6 @@ angular.module('therapyui.controllers', [])
         Machine.loadPatient($stateParams.patientId).then(function(response) {
             //console.log(JSON.stringify(response.data));
             $scope.patient = response.data.patient;
-            $scope.loadChart();
         });
     };
     $scope.newSession = function() {
@@ -289,14 +288,36 @@ angular.module('therapyui.controllers', [])
 
 })
 
-.controller('SessionCtrl', function($scope, $stateParams, Machine) {
-    $scope.session = {};
+.controller('SessionCtrl', function($scope, $location, $stateParams, Machine) {
+    $scope.session = {  };
+    $scope.sessionView = { mode: 'normal' };
+
     $scope.loadSession = function() {
         Machine.loadSession($stateParams.sessionId).then(function(response) {
             //console.log(JSON.stringify(response.data));
             $scope.session = response.data.session;
         });
     };
+
+    $scope.deleteSession = function() {
+        $scope.sessionView.confirmError = '';
+        $scope.sessionView.mode = 'confirmDelete';
+    };
+    $scope.cancelConfirm = function() {
+        $scope.sessionView.confirmError = '';
+        $scope.sessionView.mode = 'normal';
+    };
+    $scope.deleteConfirm = function() {
+        $scope.sessionView.confirmError = '';
+        Machine.deleteSession($scope.session.id)
+           .success(function(response) {
+               console.log(JSON.stringify(response));
+               $location.path("/app/patient/" + $scope.session.patientId);
+           }).error(function(response) {
+               $scope.sessionView.confirmError = 'Error deleting session';
+           });
+    }
+
     $scope.loadSession();
 })
 

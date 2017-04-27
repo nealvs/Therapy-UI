@@ -38,8 +38,8 @@
         <div ng-if="!patient.sessions || patient.sessions.length == 0">
             <center><span>No Sessions</span></center>
         </div>
-        <div id="sessionsChart" ng-if="patient.sessions || patient.sessions.length > 0" class="clear" style="height: 225px;">
-
+        <div id="sessionsChart" ng-if="patient.sessions && patient.sessions.length > 0" class="clear" style="height: 225px;">
+          {{ loadChart() }}
         </div>
         <ul class="list-group" style="max-height: 250px; overflow-y: auto">
           <li ng-repeat="session in patient.sessions track by $index" class="list-group-item">

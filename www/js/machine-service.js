@@ -20,6 +20,9 @@ angular.module('therapyui.machine-service', [])
     service.deletePatient = function(patientId) {
         return Common.post('/deletePatient', {'id': patientId});
     };
+    service.deleteSession = function(sessionId) {
+        return Common.post('/deleteSession', {'id': sessionId});
+    };
 
     service.startSession = function(patientId, minutes) {
         return Common.post('/startSession', {'patientId': patientId, 'minutes': minutes});
