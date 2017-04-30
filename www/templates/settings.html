@@ -27,15 +27,15 @@
                 <span class="large-text white">Calibrated Position:</span>
               </td>
               <td>
-                <span class="large-text white">{{ machine.startPosition | number : 2 }}</span>
+                <span class="large-text white">{{ machine.startPosition | number : 0 }}</span>
               </td>
             </tr>
             <tr ng-if="machine.opticalEncoder">
               <td>
-                <span class="large-text white">Encoder Clicks:</span>
+                <span class="large-text white">Current Position:</span>
               </td>
               <td>
-                <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
+                <span class="large-text white">{{ machine.currentPosition | number : 2 }}</span>
               </td>
             </tr>
             <tr>
