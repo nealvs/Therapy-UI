@@ -6,7 +6,7 @@
         <div class="list-group-item">
 
           <table class="calibration">
-            <tr>
+            <tr ng-if="!machine.opticalEncoder">
               <td>
                 <span class="large-text white">Calibrated Voltage:</span>
               </td>
@@ -14,9 +14,25 @@
                 <span class="large-text white">{{ machine.angleCalibrationVoltage | number : 2 }}</span>
               </td>
             </tr>
-            <tr>
+            <tr ng-if="!machine.opticalEncoder">
               <td>
                 <span class="large-text white">Encoder Voltage:</span>
+              </td>
+              <td>
+                <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
+              </td>
+            </tr>
+            <tr ng-if="machine.opticalEncoder">
+              <td>
+                <span class="large-text white">Calibrated Position:</span>
+              </td>
+              <td>
+                <span class="large-text white">{{ machine.startPosition | number : 2 }}</span>
+              </td>
+            </tr>
+            <tr ng-if="machine.opticalEncoder">
+              <td>
+                <span class="large-text white">Encoder Clicks:</span>
               </td>
               <td>
                 <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
@@ -46,7 +62,7 @@
                   </div>
 
                   <!-- Enable and disable angle limits -->
-                  <div class="btn-group btn-group-justified">
+                  <div class="btn-group btn-group-justified" ng-if="machine.hasJoystick">
                     <button class="btn btn-lg btn-primary bigger" ng-if="machine.applyAngleLimits" ng-click="removeAngleLimits();">
                       Limits: On
                     </button>
