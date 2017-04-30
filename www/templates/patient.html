@@ -41,7 +41,7 @@
         <div id="sessionsChart" ng-if="patient.sessions && patient.sessions.length > 0" class="clear" style="height: 225px;">
           {{ loadChart() }}
         </div>
-        <ul class="list-group" style="max-height: 280px; margin-bottom: 0px; overflow-y: auto">
+        <ul class="list-group" style="max-height: 270px; margin-bottom: 0px; overflow-y: auto">
           <li ng-repeat="session in patient.sessions track by $index" class="list-group-item">
             <a href="#/app/session/{{session.id}}">
               <span class="glyphicon glyphicon-chevron-right right-icon"></span>
