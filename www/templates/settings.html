@@ -57,6 +57,7 @@
                   <div class="btn-group btn-group-justified">
                     <button class="btn btn-lg btn-primary bigger" ng-click="calibrate();">
                       <span class="glyphicon glyphicon-wrench"></span>
+                      <span ng-if="!machine.hasJoystick">Calibrate</span>
                       {{ machine.angleCalibrationDegree | number: 0 }}&deg
                     </button>
                   </div>
