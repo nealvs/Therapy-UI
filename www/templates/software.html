@@ -8,14 +8,25 @@
 
 <div class="list-group-item center">
     <span>
-        Knee Angle
+        Shaft Angle
     </span>
     <h1>
+      <span ng-if="machine.shaftAngle != undefined" class="one-height">
+        {{ machine.shaftAngle | number : 0 }}&deg;
+      </span>
+      <span ng-if="machine.shaftAngle == undefined">-</span>
+    </h1>
+</div>
+<div class="list-group-item center">
+    <span>
+        Knee Angle
+    </span>
+  <h1>
       <span ng-if="machine.angle != undefined" class="one-height">
         {{ machine.angle | number : 0 }}&deg;
       </span>
-      <span ng-if="machine.angle == undefined">-</span>
-    </h1>
+    <span ng-if="machine.angle == undefined">-</span>
+  </h1>
 </div>
 <div class="list-group-item center">
     <span>
