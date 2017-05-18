@@ -234,7 +234,8 @@ angular.module('therapyui.controllers', [])
     $scope.loadChart = function() {
         $scope.chart = Highcharts.chart('sessionsChart', {
             chart: {
-                type: 'boxplot'
+                type: 'boxplot',
+                spacingBottom: 0
             },
             title: {
                 text: ''
@@ -246,7 +247,12 @@ angular.module('therapyui.controllers', [])
                 enabled: false
             },
             xAxis: {
-                categories: $scope.patient.repetitionNumbers
+                categories: $scope.patient.repetitionNumbers,
+                labels: {
+                  style: {
+                     fontSize: '16px'
+                  }
+                }
             },
             yAxis: {
                 gridZIndex: -5,
@@ -265,7 +271,12 @@ angular.module('therapyui.controllers', [])
                 title: {
                   text: ''
                 },
-                plotLines: []
+                plotLines: [],
+                labels: {
+                  style: {
+                     fontSize: '20px'
+                  }
+                }
             },
             series: [{
                 name: 'Sessions',
@@ -273,13 +284,14 @@ angular.module('therapyui.controllers', [])
             }],
             plotOptions: {
                 boxplot: {
-                    //fillColor: '#F0F0E0',
+                    fillColor: '#339933',
                     //lineWidth: 2,
                     medianWidth: 0,
                     stemWidth: 0,
                     whiskerWidth: 0
                 }
-            }
+            },
+            credits: { enabled: false }
         });
         // Move to plotLines: [] initialization
         $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.patient.lowGoal, color: 'yellow', width: 1 });
@@ -625,7 +637,8 @@ angular.module('therapyui.controllers', [])
 
     $scope.chart = Highcharts.chart('currentChart', {
         chart: {
-            type: 'boxplot'
+            type: 'boxplot',
+            spacingBottom: 0
         },
         title: {
             text: ''
@@ -637,7 +650,12 @@ angular.module('therapyui.controllers', [])
             enabled: false
         },
         xAxis: {
-            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            labels: {
+              style: {
+                 fontSize: '20px'
+              }
+            }
         },
         yAxis: {
             gridZIndex: -5,
@@ -662,7 +680,12 @@ angular.module('therapyui.controllers', [])
                 value: $scope.machine.angle,
                 color: 'green',
                 width: 4
-            }]
+            }],
+            labels: {
+              style: {
+                 fontSize: '18px'
+              }
+            }
         },
         series: [{
             name: 'Repetitions',
@@ -670,13 +693,14 @@ angular.module('therapyui.controllers', [])
         }],
         plotOptions: {
             boxplot: {
-                //fillColor: '#F0F0E0',
+                fillColor: '#339933',
                 //lineWidth: 2,
                 medianWidth: 0,
                 stemWidth: 0,
                 whiskerWidth: 0
             }
-        }
+        },
+        credits: { enabled: false }
     });
   };
 
