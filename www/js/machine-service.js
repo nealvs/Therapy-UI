@@ -46,6 +46,9 @@ angular.module('therapyui.machine-service', [])
     service.setTimeZone = function(timeZone) {
         return Common.post('/settings/setTimeZone', {'value': timeZone});
     };
+    service.clearDatabase = function() {
+        return Common.post('/settings/clearDatabase');
+    };
 
     service.updateJoystick = function(value) {
         return Common.post('/updateJoystick', {'value': value});

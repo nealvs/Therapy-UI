@@ -475,6 +475,7 @@ angular.module('therapyui.controllers', [])
       $scope.submitClearDatabase = function() {
           if($scope.settings.submittedPassword) {
             if($scope.validatePassword()) {
+                Machine.clearDatabase();
                 $scope.settings.passwordError = "";
                 $scope.settings.mode = "all";
             } else {
