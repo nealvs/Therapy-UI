@@ -67,6 +67,16 @@ table.calibration {
   display: inline-block;
 }
 
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
+
+.left {
+  text-align: left;
+}
+
 .right {
   text-align: right;
 }

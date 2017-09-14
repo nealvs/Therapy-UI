@@ -366,6 +366,10 @@ angular.module('therapyui.controllers', [])
           $scope.running = false;
       });
 
+      $scope.changeCalibration = function() {
+          $scope.settings.mode = 'calibrate';
+      };
+
       $scope.calibrate = function() {
           console.log("calibrate");
           Machine.calibrate()
@@ -415,6 +419,17 @@ angular.module('therapyui.controllers', [])
           }
       };
 
+      $scope.range = function(min, max, step) {
+          step = step || 1;
+          var input = [];
+          for (var i = min; i <= max; i += step) {
+              input.push(i);
+          }
+          return input;
+      };
+      $scope.changeDateTime = function() {
+          $scope.settings.mode = 'dateTime';
+      };
       $scope.changeTimeZone = function() {
           console.log("Set timeZone: " + $scope.settings.timeZone);
           if($scope.settings.timeZone) {
@@ -486,8 +501,18 @@ angular.module('therapyui.controllers', [])
           }
       };
 
+      $scope.changeWifi = function() {
+          $scope.settings.mode = 'wifi';
+      };
+
+
       $scope.goBack = function() {
-          if($scope.settings.mode == 'changePassword' || $scope.settings.mode == 'clearDatabase') {
+          if($scope.settings.mode == 'changePassword' ||
+             $scope.settings.mode == 'clearDatabase' ||
+             $scope.settings.mode == 'calibrate' ||
+             $scope.settings.mode == 'wifi' ||
+             $scope.settings.mode == 'dateTime') {
+
             $scope.settings.mode = "all";
           } else {
             console.log("settings running=false");

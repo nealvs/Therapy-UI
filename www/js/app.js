@@ -10,7 +10,7 @@ angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.cont
     .state('app', {
       url: '/app',
       abstract: true,
-      templateUrl: 'templates/menu.html', 
+      templateUrl: 'templates/menu.html',
       controller: 'AppCtrl'
     })
     .state('app.current', {
@@ -88,4 +88,6 @@ angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.cont
         d.setSeconds(seconds);
         return d;
     };
-}]);
+}])
+;
+
