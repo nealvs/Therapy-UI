@@ -7,6 +7,11 @@ angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.cont
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
+    .state('sleep', {
+      url: '/sleep',
+      templateUrl: 'templates/sleep.html',
+      controller: 'SleepCtrl'
+    })
     .state('app', {
       url: '/app',
       abstract: true,
@@ -32,14 +37,23 @@ angular.module('therapyui', ['ui.router', 'ng-virtual-keyboard', 'therapyui.cont
         }
     })
     .state('app.settings', {
-          url: '/settings',
-          views: {
-            'menuContent': {
-              templateUrl: 'templates/settings.html',
-              controller: 'SettingsCtrl'
-            }
+        url: '/settings',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/settings.html',
+            controller: 'SettingsCtrl'
           }
-      })
+        }
+    })
+    .state('app.power', {
+        url: '/power',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/power.html',
+            controller: 'PowerCtrl'
+          }
+        }
+    })
     .state('app.patients', {
         url: '/patients',
         views: {

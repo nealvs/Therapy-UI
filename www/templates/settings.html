@@ -27,9 +27,9 @@
 
         <div class="list-group-item">
           <div class="item range">
-            <i class="icon glyphicon glyphicon-volume-off"></i>
-            <input type="range" ng-model="machine.volume" min="0" max="100" value="50" ng-change="updateVolume()">
-            <i class="icon glyphicon glyphicon-volume-up"></i>
+            <i class="icon glyphicon glyphicon-volume-off volume inline-block"></i>
+            <input id="volume" type="range" class="volumeSlider" ng-model="machine.volume" min="0" step="10" max="100" value="50" ng-change="updateVolume()">
+            <i class="icon glyphicon glyphicon-volume-up volume inline-block"></i>
           </div>
         </div>
         <br/>
@@ -91,13 +91,13 @@
           <label for="password">
             <span class="input-label bigger">Current Password</span>
           </label>
-          <input id="password" type="password" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.submittedPassword" ng-virtual-keyboard />
+          <input id="password" type="text" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.submittedPassword" ng-virtual-keyboard />
         </div>
         <div class="form-group">
           <label for="password">
             <span class="input-label bigger">New Password</span>
           </label>
-          <input id="password" type="password" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.newPassword" ng-virtual-keyboard />
+          <input id="password" type="text" class="form-control input-lg bigger" ng-change="passwordChanged()" ng-model="settings.newPassword" ng-virtual-keyboard />
         </div>
         <button class="btn btn-block btn-lg btn-primary bigger" ng-click="submitChangePassword()">Submit</button>
 
@@ -150,29 +150,28 @@
         <br/>
         <form class="form-inline">
           <div class="form-group">
-        <select id="day" ng-model="settings.day" class="input-lg bigger form-control form-control-inline">
-          <option value="{{ n }}" ng-repeat="n in range(1,31)">{{ n }}</option>
-        </select>
-        <select id="month" ng-model="settings.month" class="input-lg bigger form-control form-control-inline">
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
-        <select id="year" ng-model="settings.year" class="input-lg bigger form-control form-control-inline">
-          <option value="{{ n }}" ng-repeat="n in range(2017,2040)">{{ n }}</option>
-        </select>
+              <select id="month" ng-model="settings.month" class="input-lg bigger form-control form-control-inline">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+              <select id="day" ng-model="settings.day" class="input-lg bigger form-control form-control-inline">
+                <option value="{{ n }}" ng-repeat="n in range(1,31)">{{ n }}</option>
+              </select>
+              <select id="year" ng-model="settings.year" class="input-lg bigger form-control form-control-inline">
+                <option value="{{ n }}" ng-repeat="n in range(2017,2040)">{{ n }}</option>
+              </select>
             </div>
           </form>
-        <br/>
         <label>
           <h3>Time:</h3>
         </label>
@@ -180,6 +179,7 @@
         <select id="hour" ng-model="settings.hour" class="input-lg bigger form-control form-control-inline">
           <option value="{{ n }}" ng-repeat="n in range(0,23)">{{ n }}</option>
         </select>
+          <span style="font-size: 35px;">:</span>
         <select id="minute" ng-model="settings.minute" class="input-lg bigger form-control form-control-inline">
           <option value="{{ n }}" ng-repeat="n in range(0,59)">{{ n }}</option>
         </select>

@@ -349,6 +349,12 @@ angular.module('therapyui.controllers', [])
                     $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
                     $scope.settings.timeZone = $scope.machine.timeZone;
                     $scope.settings.password = $scope.machine.password;
+                    $scope.settings.day = $scope.machine.day;
+                    $scope.settings.month = $scope.machine.month;
+                    $scope.settings.year = $scope.machine.year;
+                    $scope.settings.hour = $scope.machine.hour;
+                    $scope.settings.minute = $scope.machine.minute;
+                    $scope.settings.volume = $scope.machine.volume;
                 }
             }
             if($scope.running) {
@@ -419,6 +425,12 @@ angular.module('therapyui.controllers', [])
           }
       };
 
+      $scope.updateVolume = function() {
+          $scope.settings.volume = $('#volume').val();
+          console.log("Set volume: " + $scope.settings.volume);
+          Machine.setVolume($scope.settings.volume);
+      };
+
       $scope.range = function(min, max, step) {
           step = step || 1;
           var input = [];
@@ -429,6 +441,17 @@ angular.module('therapyui.controllers', [])
       };
       $scope.changeDateTime = function() {
           $scope.settings.mode = 'dateTime';
+          $scope.settings.timeZone = $scope.machine.timeZone;
+          $scope.settings.password = $scope.machine.password;
+          $scope.settings.day = $scope.machine.day;
+          $scope.settings.month = $scope.machine.month;
+          $scope.settings.year = $scope.machine.year;
+          $scope.settings.hour = $scope.machine.hour;
+          $scope.settings.minute = $scope.machine.minute;
+      };
+      $scope.saveDateTime = function() {
+          Machine.setDateTime($scope.settings.timeZone, $scope.settings.day, $scope.settings.month, $scope.settings.year, $scope.settings.hour, $scope.settings.minute);
+          $scope.goBack();
       };
       $scope.changeTimeZone = function() {
           console.log("Set timeZone: " + $scope.settings.timeZone);
@@ -464,12 +487,14 @@ angular.module('therapyui.controllers', [])
 
       $scope.changePassword = function() {
           $scope.settings.mode = 'changePassword';
+          $scope.settings.newPassword = '';
       };
       $scope.submitChangePassword = function() {
           if($scope.settings.submittedPassword) {
 
             if($scope.validatePassword()) {
                 if($scope.settings.newPassword && $scope.settings.newPassword.length > 3) {
+                    Machine.setPassword($scope.settings.newPassword);
                     $scope.settings.passwordError = "";
                     $scope.settings.mode = "all";
                 } else {
@@ -732,6 +757,29 @@ angular.module('therapyui.controllers', [])
 
   $scope.loadChart();
 
+})
+
+.controller('PowerCtrl', function($scope, $location, $stateParams, $timeout, Machine) {
+  $scope.sleep = function() {
+      $location.path("/sleep");
+  }
+  $scope.restart = function() {
+      Machine.restart();
+      $scope.sleep();
+  }
+  $scope.shutdown = function() {
+      Machine.shutdown();
+      $scope.sleep();
+  }
+  $scope.goBack = function() {
+      window.history.back();
+  }
+})
+
+.controller('SleepCtrl', function($scope, $stateParams, $timeout, Machine) {
+  $scope.goBack = function() {
+      window.history.back();
+  }
 })
 
 .controller('SoftwareCtrl', function($scope, $location, $state, $interval, Machine) {

@@ -43,11 +43,20 @@ angular.module('therapyui.machine-service', [])
     service.setHoldTime = function(holdTime) {
         return Common.post('/settings/setHoldTime', {'value': holdTime});
     };
+    service.setVolume = function(volume) {
+        return Common.post('/settings/setVolume', {'value': volume});
+    };
     service.setTimeZone = function(timeZone) {
         return Common.post('/settings/setTimeZone', {'value': timeZone});
     };
+    service.setDateTime = function(timeZone, day, month, year, hour, minute) {
+        return Common.post('/settings/setDateTime', {'timeZone': timeZone, 'day': day, 'month': month, 'year': year, 'hour': hour, 'minute': minute});
+    };
     service.clearDatabase = function() {
         return Common.post('/settings/clearDatabase');
+    };
+    service.setPassword = function(newPassword) {
+        return Common.post('/settings/setPassword', {'value': newPassword})
     };
 
     service.updateJoystick = function(value) {
@@ -78,6 +87,16 @@ angular.module('therapyui.machine-service', [])
     service.reset = function(value) {
         return Common.post('/reset', {});
     };
+
+
+    // Power Commands
+    service.restart = function() {
+        return Common.post("/restart");
+    };
+    service.shutdown = function() {
+        return Common.post("/shutdown");
+    };
+
 
     return service;
 });
