@@ -528,8 +528,18 @@ angular.module('therapyui.controllers', [])
 
       $scope.changeWifi = function() {
           $scope.settings.mode = 'wifi';
+          $scope.getNetworkStatus();
       };
 
+      $scope.getNetworkStatus = function() {
+        $scope.loadingNetwork = true;
+        Machine.getNetwork().then(function(response) {
+            $scope.loadingNetwork = false;
+            if(response.data) {
+                $scope.network = response.data;
+            }
+        });
+      };
 
       $scope.goBack = function() {
           if($scope.settings.mode == 'changePassword' ||

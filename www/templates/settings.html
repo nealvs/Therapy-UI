@@ -269,9 +269,16 @@
       <div ng-if="settings.mode == 'wifi'">
         <br/>
         <div class="list-group-item">
-            <h2>WiFi Settings</h2>
+            <h2>WiFi Settings <a ng-href="" ng-click="getNetworkStatus()"><span class="glyphicon glyphicon-refresh"></span></a></h2>
 
-            Coming soon...
+            <div ng-if="!loadingNetwork">
+              Hostname: {{ network.hostname }} <br/>
+              Private IP: {{ network.privateIp }} <br/>
+              Public IP: {{ network.publicIp }} <br/>
+              Location: {{ network.geoip.city }} {{ network.geoip.region_name }} <br/>
+              Online: {{ network.isOnline ? 'Yes' : 'No' }} <br/>
+            </div>
+
         </div>
       </div>
 
