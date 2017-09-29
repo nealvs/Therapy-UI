@@ -56,15 +56,15 @@
 </div>
 <div class="card">
   <div class="item item-text-wrap">
-    Motor Switch: {{ machine.motorSwitch }}
-  </div>
-  <div class="item item-text-wrap">
-    Rotation Motor: {{ machine.rotationMotor }}
+    Motor Switch: {{ machine.motorSwitch }} <br/>
+    Motor State: {{ machine.joystickMotorState }}
   </div>
 </div>
 
 <div class="item item-divider">
-  Joystick: {{ machine.joystick | number : 2 }} V
+  Joystick: {{ machine.joystick | number : 2 }} <br/>
+  Joystick Direction 1: {{ machine.joystickDirection1 }} <br/>
+  Joystick Direction 2: {{ machine.joystickDirection2 }} <br/>
 </div>
 <div class="item">
   <div class="item range">
