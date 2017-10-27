@@ -1,11 +1,10 @@
-<div>
+<div ng-if="!error">
   <br/>
   <div class="bar-subheader" style="height: 60px; border-bottom: 0px; top: 37px;" ng-if="!showNewPatientForm">
     <button style="height: 50px;" class="btn btn-block btn-primary bigger" ng-click="addPatient()">
       New Patient
       </button>
   </div>
-
   <div>
     <div class="list" ng-if="showNewPatientForm">
       <form>
@@ -86,4 +85,11 @@
       </div>
     </div>
   </div>
+</div>
+<div ng-if="error">
+  <br/>
+  <br/>
+  <center>
+    <h1><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Loading...</h1>
+  </center>
 </div>

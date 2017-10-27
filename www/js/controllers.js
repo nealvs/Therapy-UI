@@ -1,6 +1,8 @@
 angular.module('therapyui.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, $location, $timeout) {
+.controller('AppCtrl', function($scope, $rootScope, $location, $timeout, $interval) {
+
+    $rootScope.timeSinceChange = Date.now();
 
     $scope.showTop = function() {
        if($location.path() == '/app/current') {
@@ -8,9 +10,29 @@ angular.module('therapyui.controllers', [])
        }
        return true;
     };
+
+    $scope.$on('$locationChangeSuccess', function(event, next, current) {
+        //console.log("LocationChanged: " + current + " -> " + next);
+        $rootScope.resetIdleTime();
+    });
+
+    $rootScope.resetIdleTime = function() {
+        $rootScope.timeSinceChange = Date.now();
+    };
+
+    // Check for an idle
+    $interval(function () {
+        var seconds = (Date.now() - $rootScope.timeSinceChange) / 1000;
+        // 15 minutes
+        if(seconds > (60 * 15)) {
+            $location.path("/sleep");
+        }
+        //console.log("secondsSinceChange: " + seconds);
+    }, 15000);
+
 })
 
-.controller('PatientsCtrl', function($scope, Machine, $location) {
+.controller('PatientsCtrl', function($scope, $rootScope, Machine, $location) {
 
     $scope.form = {search: ""};
     $scope.patients = [];
@@ -20,13 +42,23 @@ angular.module('therapyui.controllers', [])
     $scope.loadPatients = function(all) {
         $scope.loadAll = all;
         console.log("Loading patients...");
+        $rootScope.resetIdleTime();
         Machine.loadPatients(all)
           .success(function(response) {
-              $scope.patients.list = response.patients;
-              console.log("Patients: " + $scope.patients.list.length);
-              try {
-                $scope.$digest();
-              } catch(ex) {}
+              if(response.error) {
+                  $rootScope.error = response.error;
+                  console.log(response.error);
+                  if($location.path() == '/app/patients') {
+                    setTimeout($scope.loadPatients, 1000);
+                  }
+              } else {
+                  $rootScope.error = null;
+                  $scope.patients.list = response.patients;
+                  console.log("Patients: " + $scope.patients.list.length);
+                  try {
+                    $scope.$digest();
+                  } catch(ex) {}
+              }
           })
           .error(function(response) {
               console.log("Error getting patients. Trying again.");
@@ -342,19 +374,25 @@ angular.module('therapyui.controllers', [])
       $scope.getMachineStatus = function() {
         Machine.getStatus().then(function(response) {
             if(response.data) {
-                $scope.machine = response.data;
+                if(response.data.error) {
+                    $scope.error = response.data.error;
+                    $scope.running = false;
+                } else {
+                    $scope.error = null;
+                    $scope.machine = response.data;
 
-                if($scope.settings.firstLoad) {
-                    $scope.settings.firstLoad = false;
-                    $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
-                    $scope.settings.timeZone = $scope.machine.timeZone;
-                    $scope.settings.password = $scope.machine.password;
-                    $scope.settings.day = $scope.machine.day;
-                    $scope.settings.month = $scope.machine.month;
-                    $scope.settings.year = $scope.machine.year;
-                    $scope.settings.hour = $scope.machine.hour;
-                    $scope.settings.minute = $scope.machine.minute;
-                    $scope.settings.volume = $scope.machine.volume;
+                    if($scope.settings.firstLoad) {
+                        $scope.settings.firstLoad = false;
+                        $scope.settings.holdTimeConfig = $scope.machine.holdTimeConfig;
+                        $scope.settings.timeZone = $scope.machine.timeZone;
+                        $scope.settings.password = $scope.machine.password;
+                        $scope.settings.day = $scope.machine.day;
+                        $scope.settings.month = $scope.machine.month;
+                        $scope.settings.year = $scope.machine.year;
+                        $scope.settings.hour = $scope.machine.hour;
+                        $scope.settings.minute = $scope.machine.minute;
+                        $scope.settings.volume = $scope.machine.volume;
+                    }
                 }
             }
             if($scope.running) {
@@ -580,7 +618,7 @@ angular.module('therapyui.controllers', [])
     //   });
 })
 
-.controller('CurrentSessionCtrl', function($scope, $location, $state, $timeout, Machine) {
+.controller('CurrentSessionCtrl', function($scope, $rootScope, $location, $state, $timeout, Machine) {
 
   $scope.machine = { session: { repetitionList: [] } };
   $scope.machine.joystick = 0;
@@ -596,7 +634,9 @@ angular.module('therapyui.controllers', [])
           response.data.joystickSlider = $scope.machine.joystickSlider;
         }
         $scope.machine = response.data;
-        if(!$scope.machine.session.patient && $location.path() == '/app/current') {
+
+        //console.log(JSON.stringify($scope.machine));
+        if((!$scope.machine.session || $scope.machine.session.endSession) && $location.path() == '/app/current') {
             $location.path("/app/patients");
         }
 
@@ -612,14 +652,16 @@ angular.module('therapyui.controllers', [])
 
             if(!$scope.goalsLoaded && $scope.machine.session.patient) {
               $scope.goalsLoaded = true;
-              console.log("lowGoal: " + $scope.machine.session.patient.lowGoal);
-              console.log("highGoal: " + $scope.machine.session.patient.highGoal);
+              //console.log("lowGoal: " + $scope.machine.session.patient.lowGoal);
+              //console.log("highGoal: " + $scope.machine.session.patient.highGoal);
               if($scope.machine.session.patient.lowGoal != null && $scope.machine.session.patient.highGoal != null) {
                 $scope.chart.series[0].yAxis.addPlotLine({id: 2, value: $scope.machine.session.patient.lowGoal, color: 'yellow', width: 1 });
                 $scope.chart.series[0].yAxis.addPlotLine({id: 3, value: $scope.machine.session.patient.highGoal, color: 'yellow', width: 1 });
               }
             }
         }
+
+        $rootScope.resetIdleTime();
 
         if($scope.running) {
             $timeout($scope.getMachineStatus, 50);

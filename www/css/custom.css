@@ -65,6 +65,10 @@ input[type=range].volumeSlider {
     display: inline-block;
 }
 
+.bold {
+  font-weight: bold !important;
+}
+
 .bigger {
     font-size: 25px;
 }
