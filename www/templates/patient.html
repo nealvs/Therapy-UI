@@ -1,5 +1,6 @@
 <div view-title="Patient">
   <div ng-if="patientView.mode == 'normal'">
+
     <div class="list-group" class="clear">
       <div class="list-group-item">
         <a href="#/app/patients">
@@ -13,7 +14,14 @@
           <span class="glyphicon glyphicon-play-circle"></span>
         </button>
       </div>
-      <div class="list-group-item center">
+
+      <div ng-if="!patientView.loaded">
+        <center>
+          <h3><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></h3>
+        </center>
+      </div>
+
+      <div class="list-group-item center" ng-if="patientView.loaded">
           <span class="bigger">
               <span class="white">{{ patient.firstName }} {{ patient.lastName }}</span>
           </span>
@@ -21,7 +29,7 @@
               <div class="glyphicon glyphicon-trash right-icon icon-small-line"></div>
           </a>
       </div>
-      <div class="list-group-item bigger" style="line-height: 2.0; text-align: right;">
+      <div class="list-group-item bigger" style="line-height: 2.0; text-align: right;" ng-if="patientView.loaded">
           <span>Goals:</span>
           <span class="inline-block right" style="width: 50px;">
             {{ patient.lowGoal }}
@@ -34,7 +42,7 @@
             <span class="glyphicon glyphicon-wrench"></span>
           </button>
       </div>
-      <div class="list-group-item">
+      <div class="list-group-item" ng-if="patientView.loaded">
         <div ng-if="!patient.sessions || patient.sessions.length == 0">
             <center><span>No Sessions</span></center>
         </div>

@@ -137,11 +137,12 @@ angular.module('therapyui.controllers', [])
 
 .controller('PatientCtrl', function($scope, $state, $stateParams, $location, Machine) {
 
-    $scope.patientView = {mode: 'normal', minutes: 15, useTimer: true};
+    $scope.patientView = {mode: 'normal', minutes: 15, useTimer: true, loaded: false};
     $scope.patient = {};
     $scope.loadPatient = function() {
         Machine.loadPatient($stateParams.patientId).then(function(response) {
             //console.log(JSON.stringify(response.data));
+            $scope.patientView.loaded = true;
             $scope.patient = response.data.patient;
         });
     };
