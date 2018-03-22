@@ -20,16 +20,16 @@
         <span class="bigger">Repetitions: {{ session.repetitions }}</span>
       </div>
       <div class="list-group-item bigger">
-        <table>
+        <table style="background: none;">
           <tr>
             <td>Max Extension: </td>
-            <td> &nbsp; {{ session.lowAngle }}&deg; </td>
-            <td> &nbsp; ({{ session.lowHoldSeconds}}s) </td>
+            <td class="right"> &nbsp; {{ session.lowAngle }}&deg; </td>
+            <td class="right"> &nbsp; ({{ session.lowHoldSeconds}}s) </td>
           </tr>
           <tr>
             <td>Max Flexion: </td>
-            <td> &nbsp; {{ session.highAngle }}&deg; </td>
-            <td> &nbsp; ({{ session.highHoldSeconds}}s) </td>
+            <td class="right"> &nbsp; {{ session.highAngle }}&deg; </td>
+            <td class="right"> &nbsp; ({{ session.highHoldSeconds}}s) </td>
           </tr>
         </table>
       </div>

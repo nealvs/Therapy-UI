@@ -52,6 +52,9 @@
             Clear Database
           </button>
         </div>
+        <div class="list-group-item">
+          Software Version: {{ machine.version }}
+        </div>
       </div>
 
       <div ng-if="settings.mode == 'password'">
@@ -131,7 +134,7 @@
 
       <div ng-if="settings.mode == 'dateTime'">
         <div class="list-group-item">
-        <h4>Date and Time will be set automatically if the machine is connected to Wifi.</h4>
+        <h4>Date and Time will be set automatically if the machine is connected to Wi-Fi.</h4>
         <label for="timeZone">
           <h3>Time Zone:</h3>
         </label>
