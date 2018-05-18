@@ -14,7 +14,7 @@
             <label for="holdTime">
               <h3>Hold Time (seconds):</h3>
             </label>
-            <input id="holdTime" type="number" min="10" max="120" class="num num-input input-lg form-control bigger" ng-focus="holdFocus()" ng-model="settings.holdTimeConfig" />
+            <input id="holdTime" type="text" class="num num-input input-lg form-control bigger" ng-focus="holdFocus()" ng-model="settings.holdTimeConfig" />
             <button class="btn btn-primary bigger" style="margin-top: -10px" ng-click="setHoldTime();">Set</button>
           </form>
         </div>
@@ -201,23 +201,42 @@
             <td>
               <span class="large-text white">Calibrated Voltage:</span>
             </td>
-            <td>
+            <td class="right">
               <span class="large-text white">{{ machine.angleCalibrationVoltage | number : 2 }}</span>
             </td>
+            <td style="width: 25%">&nbsp;</td>
           </tr>
           <tr ng-if="!machine.opticalEncoder">
             <td>
               <span class="large-text white">Encoder Voltage:</span>
             </td>
-            <td>
+            <td class="right">
               <span class="large-text white">{{ machine.rawAngle | number : 2 }}</span>
+            </td>
+          </tr>
+          <tr ng-if="machine.opticalEncoder">
+            <td>
+              <span class="large-text white">Supports Index:</span>
+            </td>
+            <td class="right">
+              <span class="large-text white">{{ machine.supportsIndexPin ? "Yes" : "No" }}</span>
+            </td>
+            <td style="width: 25%">&nbsp;</td>
+          </tr>
+          <tr ng-if="machine.opticalEncoder">
+            <td>
+              <span class="large-text white">Index Angle:</span>
+            </td>
+            <td class="right">
+              <span class="large-text white" ng-if="machine.indexPinAngle != null">{{ machine.indexPinAngle | number : 0 }}&deg;</span>
+              <span class="large-text white" ng-if="machine.indexPinAngle == null">-</span>
             </td>
           </tr>
           <tr ng-if="machine.opticalEncoder">
             <td>
               <span class="large-text white">Calibrated Position:</span>
             </td>
-            <td>
+            <td class="right">
               <span class="large-text white">{{ machine.startPosition | number : 0 }}</span>
             </td>
           </tr>
@@ -225,25 +244,30 @@
             <td>
               <span class="large-text white">Current Position:</span>
             </td>
-            <td>
-              <span class="large-text white">{{ machine.currentPosition | number : 2 }}</span>
+            <td class="right">
+              <span class="large-text white">{{ machine.currentPosition | number : 0 }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <hr/>
             </td>
           </tr>
           <tr>
             <td>
               <span class="large-text white">Angle Reading:</span>
             </td>
-            <td>
+            <td class="right">
               <span class="large-text white">{{ machine.angle | number : 0 }}&deg;</span>
             </td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colspan="3">
               &nbsp;
             </td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colspan="3">
               <div class="btn-group btn-group-justified">
                 <div class="btn-group btn-group-justified">
                   <button class="btn btn-lg btn-primary bigger" ng-click="calibrate();">
