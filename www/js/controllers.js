@@ -638,7 +638,9 @@ angular.module('therapyui.controllers', [])
 
         //console.log(JSON.stringify($scope.machine));
         if((!$scope.machine.session || $scope.machine.session.endSession) && $location.path() == '/app/current') {
+            console.log("Session has ended. Exiting.");
             $location.path("/app/patients");
+            return;
         }
 
         if($scope.chart) {
